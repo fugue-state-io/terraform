@@ -75,6 +75,10 @@ variable "vpc" {
 variable "postgres" {
 }
 
+variable "registry_creds" {
+  sensitive = true
+}
+
 # resources
 resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
   name    = "fugue-state-cluster"
@@ -86,6 +90,18 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
     size       = "s-1vcpu-2gb"
     node_count = 3
   }
+}
+
+resource "kubernetes_secret" "docker_credentials" {
+  metadata {
+    name = "docker-cfg"
+  }
+
+  data = {
+    ".dockerconfigjson" = var.registry_creds.docker_credentials
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
 }
 
 resource "local_file" "kubeconfig" {

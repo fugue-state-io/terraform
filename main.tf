@@ -10,6 +10,10 @@ terraform {
       source = "hashicorp/kubernetes"
       version = ">= 2.7.0"
     }
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.0.2"
+    }
     helm = {
       source = "hashicorp/helm"
       version = ">= 2.8.0"
@@ -63,6 +67,7 @@ module "kubernetes-config" {
   source = "./kubernetes-config"
   vpc = module.networking.vpc
   postgres = module.db.postgres
+  registry_creds = module.registry.registry_creds
   write_kubeconfig = true
   do_token = var.do_token
   helm_repo_token = var.helm_repo_token
@@ -87,6 +92,13 @@ module "db" {
   source = "./db"
   vpc = module.networking.vpc
   doks = module.kubernetes-config.doks
+  providers = {
+    digitalocean = digitalocean
+  }
+}
+
+module "registry" {
+  source = "./registry"
   providers = {
     digitalocean = digitalocean
   }

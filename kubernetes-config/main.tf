@@ -95,6 +95,7 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
 resource "kubernetes_secret" "docker_credentials" {
   metadata {
     name = "docker-cfg"
+    namespace = "argocd"
   }
 
   data = {

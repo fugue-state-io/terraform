@@ -38,6 +38,22 @@ resource "kubernetes_secret" "docker-cfg" {
   type = "kubernetes.io/dockerconfigjson"
 }
 
+resource "kubernetes_secret" "keycloak-secret" {
+  depends_on = [ kubernetes_namespace.keycloak ]
+  metadata {
+    name = "keycloak-secret"
+    namespace = "keycloak"
+  }
+  data = {
+    "keycloak-user" = var.keycloak-user.name
+    "keycloak-password" = var.keycloak-user.password
+    "external-db" = var.keycloak-db.name
+    "external-db-host" = var.postgres.private_host
+    "external-db-port" = var.postgres.port
+    "external-db-user" = var.keycloak-user.name
+    "external-db-password" = var.keycloak-user.password
+  }
+}
 # This not working is why repos can't be private but who cares
 # resource "kubernetes_secret" "argocd-repo-creds-github" {
 #   depends_on = [ kubernetes_namespace.argocd ]

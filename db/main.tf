@@ -27,6 +27,16 @@ resource "digitalocean_database_cluster" "postgres" {
   private_network_uuid = var.vpc.id
 }
 
+resource "digitalocean_database_db" "keycloak-db" {
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "keycloak"
+}
+
+resource "digitalocean_database_user" "keycloak-user" {
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "keycloak-user"
+}
+
 resource "digitalocean_database_firewall" "postgres-fw" {
   cluster_id = digitalocean_database_cluster.postgres.id
 
@@ -38,6 +48,14 @@ resource "digitalocean_database_firewall" "postgres-fw" {
 # output
 output "postgres" {
   value = digitalocean_database_cluster.postgres
+}
+
+output "keycloak-db" {
+  value = digitalocean_database_db.keycloak-db
+}
+
+output "keycloak-user" {
+  value = digitalocean_database_user.keycloak-user
 }
 
 output "resources" {

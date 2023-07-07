@@ -6,6 +6,14 @@ variable "postgres" {
   
 }
 
+variable "keycloak-db" {
+  sensitive = true
+}
+
+variable "keycloak-user" {
+  sensitive = true
+}
+
 variable "helm_repo_token" {
   sensitive = true
 }

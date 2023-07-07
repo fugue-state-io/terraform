@@ -36,6 +36,7 @@ terraform {
 provider "digitalocean" {
   
 }
+
 # variables
 variable "do_token" {
   sensitive = true
@@ -67,6 +68,8 @@ module "kubernetes-config" {
   source = "./kubernetes-config"
   vpc = module.networking.vpc
   postgres = module.db.postgres
+  keycloak-user = module.db.keycloak-user
+  keycloak-db = module.db.keycloak-db
   registry_creds = module.registry.registry_creds
   write_kubeconfig = true
   do_token = var.do_token

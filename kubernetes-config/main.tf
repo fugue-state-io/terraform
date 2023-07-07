@@ -76,6 +76,14 @@ variable "vpc" {
 variable "postgres" {
 }
 
+variable "keycloak-db" {
+  sensitive = true
+}
+
+variable "keycloak-user" {
+  sensitive = true
+}
+
 variable "registry_creds" {
   sensitive = true
 }
@@ -94,6 +102,9 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
 }
 
 resource "local_file" "kubeconfig" {
+  lifecycle {
+    ignore_changes = all
+  }
   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
   count      = var.write_kubeconfig ? 1 : 0
   content    = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].raw_config
@@ -104,6 +115,8 @@ module "charts" {
   source = "../charts"
   cluster_name = digitalocean_kubernetes_cluster.fugue-state-cluster.name
   postgres = var.postgres
+  keycloak-user = var.keycloak-user
+  keycloak-db = var.keycloak-db
   do_token = var.do_token
   registry_creds = var.registry_creds
   helm_repo_token = var.helm_repo_token

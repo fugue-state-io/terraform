@@ -52,3 +52,14 @@ resource "kubernetes_namespace" "argocd" {
     name = "argocd"
   }
 }
+
+resource "kubernetes_namespace" "c2" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "c2"
+  }
+}

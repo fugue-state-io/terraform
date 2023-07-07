@@ -21,3 +21,7 @@ variable "oauth_client_id" {
 variable "oauth_client_secret" {
   sensitive = true
 }
+
+variable "registry_creds" {
+  sensitive = true
+}

@@ -23,6 +23,21 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
     "dexId" = var.oauth_client_id
   }
 }
+
+resource "kubernetes_secret" "docker-cfg" {
+  depends_on = [ kubernetes_namespace.c2 ]
+  metadata {
+    name = "docker-cfg"
+    namespace = "c2"
+  }
+
+  data = {
+    ".dockerconfigjson" = var.registry_creds.docker_credentials
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+}
+
 # This not working is why repos can't be private but who cares
 # resource "kubernetes_secret" "argocd-repo-creds-github" {
 #   depends_on = [ kubernetes_namespace.argocd ]

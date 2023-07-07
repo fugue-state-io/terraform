@@ -20,6 +20,7 @@ terraform {
     }
   }
 }
+
 provider "kubernetes" {
   host             = digitalocean_kubernetes_cluster.fugue-state-cluster.endpoint
   token            = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].token
@@ -92,19 +93,6 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
   }
 }
 
-resource "kubernetes_secret" "docker_credentials" {
-  metadata {
-    name = "docker-cfg"
-    namespace = "argocd"
-  }
-
-  data = {
-    ".dockerconfigjson" = var.registry_creds.docker_credentials
-  }
-
-  type = "kubernetes.io/dockerconfigjson"
-}
-
 resource "local_file" "kubeconfig" {
   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
   count      = var.write_kubeconfig ? 1 : 0
@@ -117,6 +105,7 @@ module "charts" {
   cluster_name = digitalocean_kubernetes_cluster.fugue-state-cluster.name
   postgres = var.postgres
   do_token = var.do_token
+  registry_creds = var.registry_creds
   helm_repo_token = var.helm_repo_token
   oauth_client_id = var.oauth_client_id
   oauth_client_secret = var.oauth_client_secret

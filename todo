@@ -1,4 +1,5 @@
-make argo self host.
-move all helm deployments to argo other than, cert-manager, linkerd, reloader, and nginx-ingress
-add reloader for dex config.
 observability
+kubernetes secret encryption at rest
+argo workflows
+kubernetes host terraform?
+Blue/Green

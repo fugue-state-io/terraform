@@ -38,6 +38,18 @@ resource "kubernetes_secret" "docker-cfg" {
   type = "kubernetes.io/dockerconfigjson"
 }
 
+resource "kubernetes_secret" "c2-secrets" {
+  depends_on = [ kubernetes_namespace.c2 ]
+  metadata {
+    name = "c2-secrets"
+    namespace = "c2"
+  }
+
+  data = {
+    "C2_LICENSE_KEY" = var.c2_license_key
+  }
+}
+
 resource "kubernetes_secret" "keycloak-secret" {
   depends_on = [ kubernetes_namespace.keycloak ]
   metadata {

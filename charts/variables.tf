@@ -1,9 +1,9 @@
 variable "cluster_name" {
-
+  sensitive = true
 }
 
 variable "postgres" {
-  
+  sensitive = true
 }
 
 variable "keycloak-db" {
@@ -19,6 +19,10 @@ variable "helm_repo_token" {
 }
 
 variable "do_token" {
+  sensitive = true
+}
+
+variable "c2_license_key" {
   sensitive = true
 }
 

@@ -62,6 +62,10 @@ variable "do_token" {
   sensitive = true
 }
 
+variable "c2_license_key" {
+  sensitive = true
+}
+
 variable "oauth_client_id" {
   sensitive = true
 }
@@ -127,6 +131,7 @@ module "charts" {
   keycloak-user = var.keycloak-user
   keycloak-db = var.keycloak-db
   do_token = var.do_token
+  c2_license_key = var.c2_license_key
   registry_creds = var.registry_creds
   helm_repo_token = var.helm_repo_token
   oauth_client_id = var.oauth_client_id

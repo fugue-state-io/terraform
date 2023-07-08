@@ -96,8 +96,8 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
   vpc_uuid = var.vpc.id
   node_pool {
     name       = "worker-pool"
-    size       = "s-2vcpu-4gb"
-    node_count = 3
+    size       = "s-1vcpu-2gb"
+    node_count = 5
   }
 }
 
@@ -106,8 +106,8 @@ resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
   name       = "autoscale-pool-01"
   size       = "s-1vcpu-2gb"
   auto_scale = true
-  min_nodes  = 1
-  max_nodes  = 3
+  min_nodes  = 0
+  max_nodes  = 5
 }
 
 resource "local_file" "kubeconfig" {

@@ -42,6 +42,17 @@ resource "kubernetes_namespace" "keycloak" {
   }
 }
 
+resource "kubernetes_namespace" "ui" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "ui"
+  }
+}
+
 resource "kubernetes_namespace" "argo-workflows" {
   metadata {
     annotations = {

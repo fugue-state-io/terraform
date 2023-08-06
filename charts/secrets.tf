@@ -25,10 +25,10 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
 }
 
 resource "kubernetes_secret" "docker-cfg" {
-  depends_on = [ kubernetes_namespace.frontend ]
+  depends_on = [ kubernetes_namespace.ui ]
   metadata {
     name = "docker-cfg"
-    namespace = "frontend"
+    namespace = "ui"
   }
 
   data = {
@@ -55,7 +55,7 @@ resource "kubernetes_secret" "keycloak-secret" {
   }
 }
 
-resource "kubernetes_secret" "keycloak-secret" {
+resource "kubernetes_secret" "keycloak-realm-secret" {
   depends_on = [ kubernetes_namespace.keycloak ]
   metadata {
     name = "keycloak-realm-secret"

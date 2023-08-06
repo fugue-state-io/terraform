@@ -151,7 +151,12 @@ module "charts" {
   keycloak-user = var.keycloak-user
   keycloak-db = var.keycloak-db
   do_token = var.do_token
-  c2_license_key = var.c2_license_key
+  users_realm = var.users_realm
+  users_realm_baseurl = var.users_realm_baseurl
+  users_realm_private_key = var.users_realm_private_key
+  users_realm_public_key = var.users_realm_public_key
+  users_realm_username = var.users_realm_username
+  users_realm_user_password = var.users_realm_username
   registry_creds = var.registry_creds
   helm_repo_token = var.helm_repo_token
   oauth_client_id = var.oauth_client_id

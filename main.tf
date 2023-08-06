@@ -98,10 +98,15 @@ module "kubernetes-config" {
   registry_creds = module.registry.registry_creds
   write_kubeconfig = true
   do_token = var.do_token
-  c2_license_key = var.c2_license_key
   helm_repo_token = var.helm_repo_token
   oauth_client_id = var.oauth_client_id
   oauth_client_secret = var.oauth_client_secret
+  users_realm = var.users_realm
+  users_realm_baseurl = var.users_realm_baseurl
+  users_realm_private_key = var.users_realm_private_key
+  users_realm_public_key = var.users_realm_public_key
+  users_realm_username = var.users_realm_username
+  users_realm_user_password = var.users_realm_username
   providers = {
     digitalocean = digitalocean
   }

@@ -25,10 +25,10 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
 }
 
 resource "kubernetes_secret" "docker-cfg" {
-  depends_on = [ kubernetes_namespace.c2 ]
+  depends_on = [ kubernetes_namespace.frontend ]
   metadata {
     name = "docker-cfg"
-    namespace = "c2"
+    namespace = "frontend"
   }
 
   data = {
@@ -36,18 +36,6 @@ resource "kubernetes_secret" "docker-cfg" {
   }
 
   type = "kubernetes.io/dockerconfigjson"
-}
-
-resource "kubernetes_secret" "c2-secrets" {
-  depends_on = [ kubernetes_namespace.c2 ]
-  metadata {
-    name = "c2-secrets"
-    namespace = "c2"
-  }
-
-  data = {
-    "C2_LICENSE_KEY" = var.c2_license_key
-  }
 }
 
 resource "kubernetes_secret" "keycloak-secret" {
@@ -66,22 +54,19 @@ resource "kubernetes_secret" "keycloak-secret" {
     "external-db-password" = var.keycloak-user.password
   }
 }
-# This not working is why repos can't be private but who cares
-# resource "kubernetes_secret" "argocd-repo-creds-github" {
-#   depends_on = [ kubernetes_namespace.argocd ]
-#   metadata {
-#     name = "argocd-repo-creds-github"
-#     namespace = "argocd"
-#     labels = {
-#       "argocd.argoproj.io/secret-type" = "repo-creds"
-#     }
-#   }
-#   data = {
-#     "type" = "helm"
-#     "url" = "https://github.com/fugue-state-io"
-#     "githubAppPrivateKey" = file("${path.root}/.sensitive/githubAppPrivateKey")
-#     "project"  = "fugue-state"
-#     "githubAppID" = 348886
-#     "githubAppInstallationID" = 348886
-#   }
-# }
+
+resource "kubernetes_secret" "keycloak-secret" {
+  depends_on = [ kubernetes_namespace.keycloak ]
+  metadata {
+    name = "keycloak-realm-secret"
+    namespace = "keycloak"
+  }
+  data = {
+    "USERS_REALM" = var.users_realm
+    "USERS_REALM_PUBLIC_KEY" = var.users_realm_public_key
+    "USERS_REALM_PRIVATE_KEY" = var.users_realm_private_key
+    "USERS_REALM_BASEURL" = var.users_realm_baseurl
+    "USERS_REALM_USERNAME" = var.users_realm_username
+    "USERS_REALM_USER_PASSWORD" = var.users_realm_user_password
+  }
+}

@@ -12,7 +12,22 @@ step certificate create identity.linkerd.cluster.local issuer.crt issuer.key \
 --profile intermediate-ca --not-after 8760h --no-password --insecure \
 --ca ca.crt --ca-key ca.key
 
-gpg --armor --export-secret-keys 566BCF1837B27033 key.asc > key.asc
+# github App integration
+#export TF_VAR_oauth_client_id=""
+#export TF_VAR_oauth_secret_id=""
+
+# github app for argocd hooks/oauth
+# .sensitive/githubAppPrivateKey
+
+# keycloak vars
+# export TF_VAR_users_realm=""
+# export TF_VAR_users_realm_public_key=""
+# export TF_VAR_users_realm_private_key=""
+# export TF_VAR_users_realm_baseurl=""
+# export TF_VAR_users_realm_username=""
+# export TF_VAR_users_realm_user_password=""
+
+#gpg --armor --export-secret-keys 566BCF1837B27033 key.asc > key.asc
 #age-keygen -o key.txt
 
 # bootstrap backend
@@ -22,12 +37,3 @@ gpg --armor --export-secret-keys 566BCF1837B27033 key.asc > key.asc
 #terraform init --backend-config="access_key=$DO_SPACES_ACCESS_KEY" --backend-config="secret_key=$DO_SPACES_SECRET_KEY"
 # for wildcard dns record
 #export TF_VAR_do_token=""
-
-# github App integration
-#export TF_VAR_oauth_client_id=""
-#export TF_VAR_oauth_secret_id=""
-# github app for argocd hooks/oauth
-# .sensitive/githubAppPrivateKey
-# github app needs org permissions to read teams
-#SOPS_AGE_KEY_FILE=".sensitive/key.txt"
-#SOPS_AGE_RECIPIENTS=public-key

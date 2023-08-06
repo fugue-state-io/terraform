@@ -1,5 +1,7 @@
 observability
 kubernetes secret encryption at rest
 argo workflows
-kubernetes host terraform?
+kubernetes host terraform
 Blue/Green
+remove fugue-state cert issuer
+keycloak realm

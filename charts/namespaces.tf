@@ -42,15 +42,6 @@ resource "kubernetes_namespace" "keycloak" {
   }
 }
 
-resource "kubernetes_namespace" "argo-events" {
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "argo-events"
-  }
-}
 resource "kubernetes_namespace" "argo-workflows" {
   metadata {
     annotations = {
@@ -69,16 +60,5 @@ resource "kubernetes_namespace" "argocd" {
       value = "enabled"
     }
     name = "argocd"
-  }
-}
-
-resource "kubernetes_namespace" "c2" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "c2"
   }
 }

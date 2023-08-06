@@ -19,13 +19,15 @@ step certificate create identity.linkerd.cluster.local issuer.crt issuer.key \
 # github app for argocd hooks/oauth
 # .sensitive/githubAppPrivateKey
 
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+openssl rsa -pubout -in private_key.pem -out public_key.pem
 # keycloak vars
-# export TF_VAR_users_realm=""
-# export TF_VAR_users_realm_public_key=""
-# export TF_VAR_users_realm_private_key=""
-# export TF_VAR_users_realm_baseurl=""
-# export TF_VAR_users_realm_username=""
-# export TF_VAR_users_realm_user_password=""
+# export TF_VAR_users_realm="fugue-state"
+# export TF_VAR_users_realm_public_key="$(openssl enc -A -base64 -in public_key.pem)"
+# export TF_VAR_users_realm_private_key="$(openssl enc -A -base64 -in private_key.pem)"
+# export TF_VAR_users_realm_baseurl="keycloak.fugue-state.io"
+# export TF_VAR_users_realm_username="admin"
+# export TF_VAR_users_realm_user_password="woooohoooo"
 
 #gpg --armor --export-secret-keys 566BCF1837B27033 key.asc > key.asc
 #age-keygen -o key.txt

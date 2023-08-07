@@ -10,7 +10,15 @@ variable "keycloak-db" {
   sensitive = true
 }
 
-variable "keycloak-user" {
+variable "keycloak-db-user" {
+  sensitive = true
+}
+
+variable "keycloak_user" {
+  sensitive = true
+}
+
+variable "keycloak_password" {
   sensitive = true
 }
 

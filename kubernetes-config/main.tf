@@ -104,10 +104,15 @@ variable "keycloak-db" {
   sensitive = true
 }
 
-variable "keycloak-user" {
+variable "keycloak-db-user" {
   sensitive = true
 }
-
+variable "keycloak_user" {
+  sensitive = true
+}
+variable "keycloak_password" {
+  sensitive = true
+}
 variable "registry_creds" {
   sensitive = true
 }
@@ -148,7 +153,9 @@ module "charts" {
   source = "../charts"
   cluster_name = digitalocean_kubernetes_cluster.fugue-state-cluster.name
   postgres = var.postgres
-  keycloak-user = var.keycloak-user
+  keycloak_user = var.keycloak_user
+  keycloak_password = var.keycloak_password
+  keycloak-db-user = var.keycloak-db-user
   keycloak-db = var.keycloak-db
   do_token = var.do_token
   users_realm = var.users_realm

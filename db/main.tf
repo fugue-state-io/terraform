@@ -32,7 +32,7 @@ resource "digitalocean_database_db" "keycloak-db" {
   name       = "keycloak"
 }
 
-resource "digitalocean_database_user" "keycloak-user" {
+resource "digitalocean_database_user" "keycloak-db-user" {
   cluster_id = digitalocean_database_cluster.postgres.id
   name       = "keycloak-user"
 }
@@ -54,8 +54,8 @@ output "keycloak-db" {
   value = digitalocean_database_db.keycloak-db
 }
 
-output "keycloak-user" {
-  value = digitalocean_database_user.keycloak-user
+output "keycloak-db-user" {
+  value = digitalocean_database_user.keycloak-db-user
 }
 
 output "resources" {

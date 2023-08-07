@@ -45,13 +45,13 @@ resource "kubernetes_secret" "keycloak-secret" {
     namespace = "keycloak"
   }
   data = {
-    "keycloak-user" = var.keycloak-user.name
-    "keycloak-password" = var.keycloak-user.password
+    "keycloak-user" = var.keycloak_user
+    "keycloak-password" = var.keycloak_password
     "external-db" = var.keycloak-db.name
     "external-db-host" = var.postgres.private_host
     "external-db-port" = var.postgres.port
-    "external-db-user" = var.keycloak-user.name
-    "external-db-password" = var.keycloak-user.password
+    "external-db-user" = var.keycloak-db-user.name
+    "external-db-password" = var.keycloak-db-user.password
   }
 }
 

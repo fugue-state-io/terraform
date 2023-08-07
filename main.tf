@@ -64,6 +64,14 @@ variable "oauth_client_secret" {
   sensitive = true
 }
 
+variable "keycloak_user" {
+  sensitive = true
+}
+
+variable "keycloak_password" {
+  sensitive = true
+}
+
 variable "users_realm" {
   sensitive = true
 }
@@ -93,7 +101,9 @@ module "kubernetes-config" {
   source = "./kubernetes-config"
   vpc = module.networking.vpc
   postgres = module.db.postgres
-  keycloak-user = module.db.keycloak-user
+  keycloak_user = var.keycloak_user
+  keycloak_password = var.keycloak_password
+  keycloak-db-user = module.db.keycloak-db-user
   keycloak-db = module.db.keycloak-db
   registry_creds = module.registry.registry_creds
   write_kubeconfig = true

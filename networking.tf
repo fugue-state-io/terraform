@@ -1,24 +1,9 @@
-# provider
-terraform {
-  required_version = ">=1.2.4"
-  required_providers {
-    digitalocean = {
-      source = "digitalocean/digitalocean"
-      version = "~> 2.28.1"
-    }
-  }
-}
 # variables
 variable "load_balancer_ip" {
   type = string
   default = "0.0.0.0"
 }
 
-variable "gh_txt_record" {
-}
-
-variable "gh_text_record_value" {
-}
 # resources
 resource "digitalocean_vpc" "fugue-state-vpc" {
   name       = "fugue-state-vpc"
@@ -45,33 +30,26 @@ resource "digitalocean_record" "a-fugue-state" {
   domain = digitalocean_domain.fugue-state.id
   type   = "A"
   name   = "*"
-  value  = var.load_balancer_ip
+  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
 }
 
 resource "digitalocean_record" "a-fuguestate" {
   domain = digitalocean_domain.fuguestate.id
   type   = "A"
   name   = "*"
-  value  = var.load_balancer_ip
+  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
 }
 
 resource "digitalocean_record" "at-fugue-state" {
   domain = digitalocean_domain.fugue-state.id
   type   = "A"
   name   = "@"
-  value  = var.load_balancer_ip
+  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
 }
 
 resource "digitalocean_record" "at-fuguestate" {
   domain = digitalocean_domain.fuguestate.id
   type   = "A"
   name   = "@"
-  value  = var.load_balancer_ip
-}
-# outputs
-output "vpc" {
-  value = digitalocean_vpc.fugue-state-vpc
-}
-output "resources" {
-  value = [digitalocean_domain.fuguestate.urn, digitalocean_domain.fugue-state.urn]
+  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
 }

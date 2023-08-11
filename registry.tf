@@ -1,17 +1,3 @@
-# provider
-terraform {
-  required_version = ">=1.2.4"
-  required_providers {
-    digitalocean = {
-      source = "digitalocean/digitalocean"
-      version = "~> 2.28.1"
-    }
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "3.0.2"
-    }
-  }
-}
 # Create a new container registry
 resource "digitalocean_container_registry" "fugue-state-registry" {
   name                   = "fugue-state-registry"
@@ -33,8 +19,4 @@ resource "local_file" "docker_credentials" {
 
 resource "digitalocean_container_registry_docker_credentials" "fugue-state-registry-credentials" {
   registry_name = digitalocean_container_registry.fugue-state-registry.name
-}
-# output
-output "registry_creds" {
-  value = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials
 }

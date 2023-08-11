@@ -1,30 +1,12 @@
-# provider
-terraform {
-  required_version = ">=1.2.4"
-  required_providers {
-    digitalocean = {
-      source = "digitalocean/digitalocean"
-      version = "~> 2.28.1"
-    }
-  }
-}
-# variable
-variable "vpc" {
-}
-
-variable "doks" {
-
-}
 # resources
 resource "digitalocean_database_cluster" "postgres" {
-  depends_on = [ var.vpc ]
   name       = "fugue-state-postgres-cluster"
   engine     = "pg"
   version    = "14"
   size       = "db-s-1vcpu-1gb"
   region     = "nyc3"
   node_count = 1
-  private_network_uuid = var.vpc.id
+  private_network_uuid = digitalocean_vpc.fugue-state-vpc.id
 }
 
 resource "digitalocean_database_db" "keycloak-db" {
@@ -42,22 +24,6 @@ resource "digitalocean_database_firewall" "postgres-fw" {
 
   rule {
     type  = "k8s"
-    value = var.doks.id
+    value = digitalocean_kubernetes_cluster.fugue-state-cluster.id
   }
-}
-# output
-output "postgres" {
-  value = digitalocean_database_cluster.postgres
-}
-
-output "keycloak-db" {
-  value = digitalocean_database_db.keycloak-db
-}
-
-output "keycloak-db-user" {
-  value = digitalocean_database_user.keycloak-db-user
-}
-
-output "resources" {
-  value = [digitalocean_database_cluster.postgres.urn]
 }

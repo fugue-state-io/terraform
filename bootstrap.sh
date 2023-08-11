@@ -29,9 +29,6 @@ openssl rsa -pubout -in private_key.pem -out public_key.pem
 # export TF_VAR_users_realm_username="admin"
 # export TF_VAR_users_realm_user_password="woooohoooo"
 
-#gpg --armor --export-secret-keys 566BCF1837B27033 key.asc > key.asc
-#age-keygen -o key.txt
-
 # bootstrap backend
 #export DO_SPACES_ACCESS_KEY=""
 #export DO_SPACES_SECRET_KEY=""

@@ -33,8 +33,34 @@ terraform {
   }
 }
 
+provider "kubernetes" {
+  host             = digitalocean_kubernetes_cluster.fugue-state-cluster.endpoint
+  token            = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].token
+  cluster_ca_certificate = base64decode(
+    digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].cluster_ca_certificate
+  )
+}
+
+provider "helm" {
+  kubernetes {
+    host  = digitalocean_kubernetes_cluster.fugue-state-cluster.endpoint
+    token = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].token
+    cluster_ca_certificate = base64decode(
+      digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].cluster_ca_certificate
+    )
+  }
+}
+
+provider "kubectl" {
+  host  = digitalocean_kubernetes_cluster.fugue-state-cluster.endpoint
+  token = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].token
+  cluster_ca_certificate = base64decode(
+    digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].cluster_ca_certificate
+  )
+  load_config_file = true
+}
+
 provider "digitalocean" {
-  
 }
 
 # variables
@@ -47,12 +73,12 @@ variable "helm_repo_token" {
 }
 
 variable "gh_txt_record" {
-  sensitive = false
+  sensitive = true
   default = "_github-challenge-fugue-state-io-org"
 }
 
 variable "gh_text_record_value" {
-  sensitive = false
+  sensitive = true
   default ="d6c274a1ac"
 }
 
@@ -96,62 +122,10 @@ variable "users_realm_user_password" {
   sensitive = true
 }
 
-# resources
-module "kubernetes-config" {
-  source = "./kubernetes-config"
-  vpc = module.networking.vpc
-  postgres = module.db.postgres
-  keycloak_user = var.keycloak_user
-  keycloak_password = var.keycloak_password
-  keycloak-db-user = module.db.keycloak-db-user
-  keycloak-db = module.db.keycloak-db
-  registry_creds = module.registry.registry_creds
-  write_kubeconfig = true
-  do_token = var.do_token
-  helm_repo_token = var.helm_repo_token
-  oauth_client_id = var.oauth_client_id
-  oauth_client_secret = var.oauth_client_secret
-  users_realm = var.users_realm
-  users_realm_baseurl = var.users_realm_baseurl
-  users_realm_private_key = var.users_realm_private_key
-  users_realm_public_key = var.users_realm_public_key
-  users_realm_username = var.users_realm_username
-  users_realm_user_password = var.users_realm_username
-  providers = {
-    digitalocean = digitalocean
-  }
-}
-
-module "networking" {
-  source = "./networking"
-  load_balancer_ip = module.kubernetes-config.load_balancer_ip
-  gh_txt_record = var.gh_txt_record
-  gh_text_record_value = var.gh_text_record_value
-  providers = {
-    digitalocean = digitalocean
-  }
-}
-
-module "db" {
-  source = "./db"
-  vpc = module.networking.vpc
-  doks = module.kubernetes-config.doks
-  providers = {
-    digitalocean = digitalocean
-  }
-}
-
-module "registry" {
-  source = "./registry"
-  providers = {
-    digitalocean = digitalocean
-  }
-}
-
 resource "digitalocean_project" "fugue-state-io" {
   description  = "fugue-state-io"
   environment  = "Production"
   name         = "fugue-state-io"
   purpose      = "Web Application"
-  resources    = concat(module.networking.resources, module.kubernetes-config.resources, module.db.resources)
+  is_default   = true
 }

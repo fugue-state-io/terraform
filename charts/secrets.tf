@@ -52,16 +52,6 @@ resource "kubernetes_secret" "keycloak-secret" {
     "external-db-port" = var.postgres.port
     "external-db-user" = var.keycloak-db-user.name
     "external-db-password" = var.keycloak-db-user.password
-  }
-}
-
-resource "kubernetes_secret" "keycloak-realm-secret" {
-  depends_on = [ kubernetes_namespace.keycloak ]
-  metadata {
-    name = "keycloak-realm-secret"
-    namespace = "keycloak"
-  }
-  data = {
     "USERS_REALM" = var.users_realm
     "USERS_REALM_PUBLIC_KEY" = var.users_realm_public_key
     "USERS_REALM_PRIVATE_KEY" = var.users_realm_private_key

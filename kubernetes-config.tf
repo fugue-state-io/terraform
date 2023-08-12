@@ -2,7 +2,7 @@
 resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
   name    = "fugue-state-cluster"
   region  = "nyc3"
-  version = "1.26.5-do.0"
+  version = "1.25.12-do.0"
   vpc_uuid = digitalocean_vpc.fugue-state-vpc.id
   node_pool {
     name       = "worker-pool"

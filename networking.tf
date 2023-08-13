@@ -1,10 +1,3 @@
-# variables
-variable "load_balancer_ip" {
-  type = string
-  default = "0.0.0.0"
-}
-
-# resources
 resource "digitalocean_vpc" "fugue-state-vpc" {
   name       = "fugue-state-vpc"
   region     = "nyc3"
@@ -52,4 +45,13 @@ resource "digitalocean_record" "at-fuguestate" {
   type   = "A"
   name   = "@"
   value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+}
+
+# Domains
+resource "digitalocean_project_resources" "networking_resources" {
+  project = digitalocean_project.fugue-state-io.id
+  resources = [
+    digitalocean_vpc.fugue-state.urn,
+    digitalocean_vpc.fuguestate.urn
+  ]
 }

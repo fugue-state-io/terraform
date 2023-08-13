@@ -62,6 +62,12 @@ variable "oauth_client_secret" {
   sensitive = true
 }
 
+variable "argo-workflows-sso-client-id" {
+  sensitive = true
+}
+variable "argo-workflows-sso-client-secret" {
+  sensitive = true
+}
 variable "registry_creds" {
   sensitive = true
 }

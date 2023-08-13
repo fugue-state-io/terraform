@@ -27,3 +27,11 @@ resource "digitalocean_database_firewall" "postgres-fw" {
     value = digitalocean_kubernetes_cluster.fugue-state-cluster.id
   }
 }
+
+# Database Clusters
+resource "digitalocean_project_resources" "db_resources" {
+  project = digitalocean_project.fugue-state-io.id
+  resources = [
+    digitalocean_database_cluster.postgres.urn
+  ]
+}

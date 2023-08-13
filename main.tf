@@ -127,5 +127,5 @@ resource "digitalocean_project" "fugue-state-io" {
   environment  = "Production"
   name         = "fugue-state-io"
   purpose      = "Web Application"
-  is_default   = true
+  is_default   = false
 }

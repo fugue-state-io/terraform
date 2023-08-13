@@ -58,3 +58,13 @@ data "digitalocean_loadbalancer" "fugue-state-cluster-loadbalancer" {
   depends_on = [ module.charts.load_balancer ]
   name = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)
 }
+
+# Kubernetes Cluster
+# Load Balancers
+resource "digitalocean_project_resources" "db_resources" {
+  project = digitalocean_project.fugue-state-io.id
+  resources = [
+    digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.urn,
+    digitalocean_kubernetes_cluster.fugue-state-cluster.urn
+  ]
+}

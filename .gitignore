@@ -1,7 +1,7 @@
 kubeconfig
 **/*.crt
 **/*.key
-.sensitive/*
+**/.sensitive/*
 
 .terraform.lock.hcl
 # Local .terraform directories

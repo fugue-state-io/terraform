@@ -14,7 +14,7 @@ resource "local_file" "docker_credentials" {
     ignore_changes = all
   }
   content    = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials-rw.docker_credentials
-  filename   = "${path.root}/.sensitive/docker_credentials"
+  filename   = "${path.root}/../.sensitive/docker_credentials"
 }
 
 resource "digitalocean_container_registry_docker_credentials" "fugue-state-registry-credentials" {

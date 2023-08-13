@@ -27,17 +27,17 @@ resource "helm_release" "linkerd-control-plane" {
   namespace        = kubernetes_namespace.linkerd.metadata[0].name
   set_sensitive {
     name  = "identityTrustAnchorsPEM"
-    value = file("${path.root}/.sensitive/ca.crt")
+    value = file("${path.root}/../.sensitive/ca.crt")
   }
 
   set_sensitive {
     name  = "identity.issuer.tls.crtPEM"
-    value = file("${path.root}/.sensitive/issuer.crt")
+    value = file("${path.root}/../.sensitive/issuer.crt")
   }
 
   set_sensitive {
     name  = "identity.issuer.tls.keyPEM"
-    value = file("${path.root}/.sensitive/issuer.key")
+    value = file("${path.root}/../.sensitive/issuer.key")
   }
 }
 
@@ -82,6 +82,6 @@ resource "helm_release" "nginx-ingress" {
   }
   set {
     name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-name"
-    value = format("%s-nginx-ingress", var.cluster_name)
+    value = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)
   }
 }

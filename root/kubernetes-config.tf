@@ -29,42 +29,17 @@ resource "local_file" "kubeconfig" {
   filename   = "${path.root}/.sensitive/kubeconfig"
 }
 
-module "charts" {
-  source = "./charts"
-  keycloak_user = var.keycloak_user
-  keycloak_password = var.keycloak_password
-  do_token = var.do_token
-  users_realm = var.users_realm
-  users_realm_baseurl = var.users_realm_baseurl
-  users_realm_private_key = var.users_realm_private_key
-  users_realm_public_key = var.users_realm_public_key
-  users_realm_username = var.users_realm_username
-  users_realm_user_password = var.users_realm_username
-  helm_repo_token = var.helm_repo_token
-  oauth_client_id = var.oauth_client_id
-  oauth_client_secret = var.oauth_client_secret
-  cluster_name = digitalocean_kubernetes_cluster.fugue-state-cluster.name
-  postgres = digitalocean_database_cluster.postgres
-  keycloak-db-user = digitalocean_database_user.keycloak-db-user
-  keycloak-db = digitalocean_database_db.keycloak-db
-  registry_creds = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials
-  providers = {
-    helm = helm
-    kubectl = kubectl
-  }
-}
-
 data "digitalocean_loadbalancer" "fugue-state-cluster-loadbalancer" {
-  depends_on = [ module.charts.load_balancer ]
+  depends_on = [ helm_release.nginx-ingress ]
   name = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)
 }
 
 # Kubernetes Cluster
 # Load Balancers
-resource "digitalocean_project_resources" "db_resources" {
+resource "digitalocean_project_resources" "kubernetes_resources" {
   project = digitalocean_project.fugue-state-io.id
   resources = [
-    digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.urn,
+    data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.urn,
     digitalocean_kubernetes_cluster.fugue-state-cluster.urn
   ]
 }

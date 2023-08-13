@@ -51,7 +51,7 @@ resource "digitalocean_record" "at-fuguestate" {
 resource "digitalocean_project_resources" "networking_resources" {
   project = digitalocean_project.fugue-state-io.id
   resources = [
-    digitalocean_vpc.fugue-state.urn,
-    digitalocean_vpc.fuguestate.urn
+    digitalocean_domain.fugue-state.urn,
+    digitalocean_domain.fuguestate.urn
   ]
 }

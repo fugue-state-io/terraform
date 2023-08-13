@@ -86,6 +86,14 @@ variable "oauth_client_id" {
   sensitive = true
 }
 
+variable "argo_workflows_client_id" {
+  sensitive = true
+}
+
+variable "argo_workflows_client_secret" {
+  sensitive = true
+}
+
 variable "oauth_client_secret" {
   sensitive = true
 }

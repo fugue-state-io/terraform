@@ -26,7 +26,7 @@ resource "local_file" "kubeconfig" {
   }
   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
   content    = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].raw_config
-  filename   = "${path.root}/.sensitive/kubeconfig"
+  filename   = "${path.root}/../.sensitive/kubeconfig"
 }
 
 data "digitalocean_loadbalancer" "fugue-state-cluster-loadbalancer" {

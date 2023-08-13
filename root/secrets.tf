@@ -12,7 +12,7 @@ resource "kubernetes_secret" "digitalocean-dns" {
 resource "kubernetes_secret" "argo-workflows-sso-argocd" {
   depends_on = [ kubernetes_namespace.argocd ]
   metadata {
-    name = "fugue-state-argo-workflows-sso-argocd"
+    name = "argo-workflows-sso"
     namespace = "argocd"
     labels = {
       "app.kubernetes.io/part-of" = "argocd"
@@ -27,7 +27,7 @@ resource "kubernetes_secret" "argo-workflows-sso-argocd" {
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   depends_on = [ kubernetes_namespace.argo-workflows ]
   metadata {
-    name = "fugue-state-argo-workflows-sso-argoworkflows"
+    name = "argo-workflows-sso"
     namespace = "argo-workflows"
     labels = {
       "app.kubernetes.io/part-of" = "argo-workflows"

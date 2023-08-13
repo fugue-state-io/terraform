@@ -10,16 +10,19 @@ resource "digitalocean_database_cluster" "postgres" {
 }
 
 resource "digitalocean_database_db" "keycloak-db" {
+  depends_on = [ digitalocean_database_cluster.postgres ]
   cluster_id = digitalocean_database_cluster.postgres.id
   name       = "keycloak"
 }
 
 resource "digitalocean_database_user" "keycloak-db-user" {
+  depends_on = [ digitalocean_database_cluster.postgres ]
   cluster_id = digitalocean_database_cluster.postgres.id
   name       = "keycloak-user"
 }
 
 resource "digitalocean_database_firewall" "postgres-fw" {
+  depends_on = [ digitalocean_database_cluster.postgres ]
   cluster_id = digitalocean_database_cluster.postgres.id
 
   rule {
@@ -30,6 +33,7 @@ resource "digitalocean_database_firewall" "postgres-fw" {
 
 # Database Clusters
 resource "digitalocean_project_resources" "db_resources" {
+  depends_on = [ digitalocean_database_cluster.postgres ]
   project = digitalocean_project.fugue-state-io.id
   resources = [
     digitalocean_database_cluster.postgres.urn

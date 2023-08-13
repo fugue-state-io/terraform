@@ -12,6 +12,7 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
 }
 
 resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
+  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
   cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
   name       = "autoscale-pool-01"
   size       = "s-1vcpu-2gb"
@@ -37,6 +38,7 @@ data "digitalocean_loadbalancer" "fugue-state-cluster-loadbalancer" {
 # Kubernetes Cluster
 # Load Balancers
 resource "digitalocean_project_resources" "kubernetes_resources" {
+  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
   project = digitalocean_project.fugue-state-io.id
   resources = [
     data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.urn,

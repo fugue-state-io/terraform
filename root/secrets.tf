@@ -25,7 +25,7 @@ resource "kubernetes_secret" "argo-workflows-sso-argocd" {
 }
 
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
-  depends_on = [ kubernetes_namespace.argocd ]
+  depends_on = [ kubernetes_namespace.argo-workflows ]
   metadata {
     name = "fugue-state-argo-workflows-sso-argoworkflows"
     namespace = "argo-workflows"

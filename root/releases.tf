@@ -72,6 +72,7 @@ resource "helm_release" "fugue-state-cert-issuer" {
 }
 
 resource "helm_release" "nginx-ingress" {
+  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
   name       = "nginx-ingress-controller"
   namespace  = kubernetes_namespace.nginx-ingress.metadata.0.name
   repository = "https://charts.bitnami.com/bitnami"

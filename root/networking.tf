@@ -5,10 +5,12 @@ resource "digitalocean_vpc" "fugue-state-vpc" {
 }
 
 resource "digitalocean_domain" "fugue-state" {
+  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
   name = "fugue-state.io"
 }
 
 resource "digitalocean_domain" "fuguestate" {
+  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
   name = "fuguestate.io"
 }
 
@@ -20,6 +22,7 @@ resource "digitalocean_record" "github-challenge" {
 }
 
 resource "digitalocean_record" "a-fugue-state" {
+  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
   domain = digitalocean_domain.fugue-state.id
   type   = "A"
   name   = "*"
@@ -27,6 +30,7 @@ resource "digitalocean_record" "a-fugue-state" {
 }
 
 resource "digitalocean_record" "a-fuguestate" {
+  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
   domain = digitalocean_domain.fuguestate.id
   type   = "A"
   name   = "*"

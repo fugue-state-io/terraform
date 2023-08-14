@@ -40,6 +40,8 @@ else
 fi
 
 # keycloak vars
+export TF_VAR_keycloak_user="keycloak"
+#export TF_VAR_keycloak_password=""
 export TF_VAR_users_realm="fugue-state"
 export TF_VAR_users_realm_public_key="$(openssl enc -A -base64 -in public_key.pem)"
 export TF_VAR_users_realm_private_key="$(openssl enc -A -base64 -in private_key.pem)"

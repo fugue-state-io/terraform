@@ -19,8 +19,8 @@ resource "kubernetes_secret" "argo-workflows-sso-argocd" {
     }
   }
   data = {
-    "client-secret" = base64encode(var.argo_workflows_client_secret)
-    "client-id" = base64encode(var.argo_workflows_client_id)
+    "client-secret" = var.argo_workflows_client_secret
+    "client-id" = var.argo_workflows_client_id
   }
 }
 
@@ -30,7 +30,7 @@ resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
     name = "argo-workflows-sso"
     namespace = "argo-workflows"
     labels = {
-      "app.kubernetes.io/part-of" = "argo-workflows"
+      "app.kubernetes.io/part-of" = "argocd"
     }
   }
   data = {

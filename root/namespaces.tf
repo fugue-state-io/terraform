@@ -67,6 +67,17 @@ resource "kubernetes_namespace" "argo-workflows" {
   }
 }
 
+resource "kubernetes_namespace" "workflows" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "workflows"
+  }
+}
+
 resource "kubernetes_namespace" "argocd" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {

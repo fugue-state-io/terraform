@@ -99,3 +99,25 @@ resource "kubernetes_namespace" "argo-events" {
     name = "argo-events"
   }
 }
+
+resource "kubernetes_namespace" "ci" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "ci"
+  }
+}
+
+resource "kubernetes_namespace" "etl" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "etl"
+  }
+}

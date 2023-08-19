@@ -94,6 +94,10 @@ variable "argo_workflows_client_secret" {
   sensitive = true
 }
 
+variable "argocd_webhook_secret" {
+  sensitive = true
+}
+
 variable "oauth_client_secret" {
   sensitive = true
 }

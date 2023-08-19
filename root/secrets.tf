@@ -39,10 +39,10 @@ resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   }
 }
 
-resource "kubernetes_secret" "fugue-state-argocd-secret" {
+resource "kubernetes_secret" "argocd-secret" {
   depends_on = [ kubernetes_namespace.argocd ]
   metadata {
-    name = "fugue-state-argocd-secret"
+    name = "argocd-secret"
     namespace = "argocd"
     labels = {
       "app.kubernetes.io/part-of" = "argocd"
@@ -51,6 +51,7 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
   data = {
     "dexSecret" = var.oauth_client_secret
     "dexId" = var.oauth_client_id
+    "webhook.github.secret" = var.argocd_webhook_secret
   }
 }
 resource "kubernetes_secret" "docker-cfg" {

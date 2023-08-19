@@ -1,4 +1,3 @@
-
 resource "kubernetes_secret" "digitalocean-dns" {
   metadata {
     name = "digitalocean-dns"
@@ -16,6 +15,11 @@ resource "kubernetes_secret" "argo-workflows-sso-argocd" {
     namespace = "argocd"
     labels = {
       "app.kubernetes.io/part-of" = "argocd"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argocd"
+      "meta.helm.sh/release-name" = "argo-cd"
     }
   }
   data = {
@@ -30,7 +34,12 @@ resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
     name = "argo-workflows-sso"
     namespace = "argo-workflows"
     labels = {
-      "app.kubernetes.io/part-of" = "argocd"
+      "app.kubernetes.io/part-of" = "argo-workflows"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argo-workflows"
+      "meta.helm.sh/release-name" = "argo-workflows"
     }
   }
   data = {
@@ -39,13 +48,18 @@ resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   }
 }
 
-resource "kubernetes_secret" "argocd-secret" {
+resource "kubernetes_secret" "fugue-state-argocd-secret" {
   depends_on = [ kubernetes_namespace.argocd ]
   metadata {
-    name = "argocd-secret"
+    name = "fugue-state-argocd-secret"
     namespace = "argocd"
     labels = {
       "app.kubernetes.io/part-of" = "argocd"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argocd"
+      "meta.helm.sh/release-name" = "argo-cd"
     }
   }
   data = {

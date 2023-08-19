@@ -10,7 +10,6 @@ export WORKING_DIRECTORY=$(dirname $BOOTSTRAP_PATH)
 # for wildcard dns record
 # export TF_VAR_do_token=""
 # in git ignore locally sourced configuration kubeconfig
-
 cd $WORKING_DIRECTORY/.sensitive
 
 if [ -f "ca.crt" ]; then
@@ -48,7 +47,3 @@ export TF_VAR_users_realm_private_key="$(openssl enc -A -base64 -in private_key.
 export TF_VAR_users_realm_baseurl="keycloak.fugue-state.io"
 export TF_VAR_users_realm_username="keycloak"
 #export TF_VAR_users_realm_user_password=""
-
-export KUBECONFIG="$WORKING_DIRECTORY/.sensitive/kubeconfig"
-cd $WORKING_DIRECTORY
-terraform -chdir=root apply -auto-approve

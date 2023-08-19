@@ -57,20 +57,6 @@ resource "helm_release" "cert-manager" {
   }
 }
 
-resource "helm_release" "fugue-state-cert-issuer" {
-  depends_on = [ helm_release.cert-manager ]
-  name             = "fugue-state-cert-issuer"
-  chart            = "${path.module}/fugue-state-cert-issuer/"
-  cleanup_on_fail  = true
-  force_update     = true
-  namespace        = kubernetes_namespace.cert-manager.metadata[0].name
-
-  set_sensitive {
-    name = "base64token"
-    value = base64encode(var.do_token)
-  }
-}
-
 resource "helm_release" "nginx-ingress" {
   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
   name       = "nginx-ingress-controller"

@@ -24,7 +24,7 @@ resource "kubernetes_namespace" "cert-manager" {
 }
 
 resource "kubernetes_namespace" "nginx-ingress" {
-  depends_on = [ helm_release.fugue-state-cert-issuer, helm_release.linkerd-control-plane ]
+  depends_on = [ helm_release.linkerd-control-plane ]
   metadata {
     annotations = {
       name = "linkerd.io/inject"

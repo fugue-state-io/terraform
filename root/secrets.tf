@@ -8,6 +8,17 @@ resource "kubernetes_secret" "digitalocean-dns" {
   }
 }
 
+# resource "kubernetes_config_map" "tls-cert" {
+#   metadata {
+#     name = "tls-cert"
+#     namespace = "argo-workflows"
+#   }
+
+#   data = {
+#     "ca-cert" = "${file("${path.module}/../.sensitive/letsencrypt-stg-int-r3.pem")}"
+#   }
+# }
+
 resource "kubernetes_secret" "argo-workflows-sso-argocd" {
   depends_on = [ kubernetes_namespace.argocd ]
   metadata {

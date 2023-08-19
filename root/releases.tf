@@ -1,12 +1,3 @@
-resource "helm_release" "reloader" {
-  depends_on = [ kubernetes_namespace.reloader ]
-  name       = "reloader"
-  namespace  = kubernetes_namespace.reloader.metadata.0.name
-  repository = "https://stakater.github.io/stakater-charts"
-  chart      = "reloader"
-  version    = "1.0.29"
-}
-
 resource "helm_release" "linkerd" {
   depends_on = [ kubernetes_namespace.linkerd ]
   name             = "linkerd"
@@ -38,22 +29,6 @@ resource "helm_release" "linkerd-control-plane" {
   set_sensitive {
     name  = "identity.issuer.tls.keyPEM"
     value = file("${path.root}/../.sensitive/issuer.key")
-  }
-}
-
-resource "helm_release" "cert-manager" {
-  depends_on = [ helm_release.linkerd-control-plane ]
-  name             = "cert-manager"
-  repository       = "https://charts.jetstack.io"
-  chart             = "cert-manager"
-  cleanup_on_fail  = true
-  force_update     = true
-  namespace        = kubernetes_namespace.cert-manager.metadata[0].name
-  create_namespace = true
-
-  set {
-    name = "installCRDs"
-    value = "true"
   }
 }
 

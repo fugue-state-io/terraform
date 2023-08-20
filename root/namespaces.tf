@@ -5,6 +5,13 @@ resource "kubernetes_namespace" "reloader" {
   }
 }
 
+resource "kubernetes_namespace" "prometheus" {
+  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
+  metadata {
+    name = "prometheus"
+  }
+}
+
 resource "kubernetes_namespace" "linkerd" {
   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
   metadata {

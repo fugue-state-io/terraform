@@ -39,6 +39,17 @@ resource "kubernetes_secret" "argo-workflows-sso-argocd" {
   }
 }
 
+resource "kubernetes_secret" "ci-secrets" {
+  depends_on = [ kubernetes_namespace.ci ]
+  metadata {
+    name = "ci-secrets"
+    namespace = "ci"
+  }
+  data = {
+    "github-webhook-secret" = var.github_webhook_secret
+  }
+}
+
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   depends_on = [ kubernetes_namespace.argo-workflows ]
   metadata {

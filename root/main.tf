@@ -134,6 +134,10 @@ variable "users_realm_user_password" {
   sensitive = true
 }
 
+variable "github_webhook_secret" {
+  sensitive = true
+}
+
 resource "digitalocean_project" "fugue-state-io" {
   description  = "fugue-state-io"
   environment  = "Production"

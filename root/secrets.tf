@@ -24,6 +24,14 @@ resource "kubernetes_secret" "argo-workflows-sso-argocd" {
   metadata {
     name = "argo-workflows-sso"
     namespace = "argocd"
+    labels = {
+      "app.kubernetes.io/part-of" = "argocd"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argocd"
+      "meta.helm.sh/release-name" = "argo-cd"
+    }
   }
   data = {
     "client-secret" = var.argo_workflows_client_secret
@@ -47,6 +55,14 @@ resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   metadata {
     name = "argo-workflows-sso"
     namespace = "argo-workflows"
+    labels = {
+      "app.kubernetes.io/part-of" = "argo-workflows"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argo-workflows"
+      "meta.helm.sh/release-name" = "argo-workflows"
+    }
   }
   data = {
     "client-secret" = var.argo_workflows_client_secret
@@ -59,6 +75,14 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
   metadata {
     name = "fugue-state-argocd-secret"
     namespace = "argocd"
+    labels = {
+      "app.kubernetes.io/part-of" = "argocd"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argocd"
+      "meta.helm.sh/release-name" = "argo-cd"
+    }
   }
   data = {
     "dexSecret" = var.oauth_client_secret

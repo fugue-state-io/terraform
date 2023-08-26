@@ -61,6 +61,9 @@ provider "kubectl" {
 }
 
 provider "digitalocean" {
+  token = var.do_token
+  spaces_access_id = var.do_spaces_access_id
+  spaces_secret_key = var.do_spaces_secret_key
 }
 
 # variables
@@ -135,6 +138,14 @@ variable "users_realm_user_password" {
 }
 
 variable "github_webhook_secret" {
+  sensitive = true
+}
+
+variable "do_spaces_access_id" {
+  sensitive = true
+}
+
+variable "do_spaces_secret_key" {
   sensitive = true
 }
 

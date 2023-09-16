@@ -8,17 +8,6 @@ resource "kubernetes_secret" "digitalocean-dns" {
   }
 }
 
-# resource "kubernetes_config_map" "tls-cert" {
-#   metadata {
-#     name = "tls-cert"
-#     namespace = "argo-workflows"
-#   }
-
-#   data = {
-#     "ca-cert" = "${file("${path.module}/../.sensitive/letsencrypt-stg-int-r3.pem")}"
-#   }
-# }
-
 resource "kubernetes_secret" "argo-workflows-sso-argocd" {
   depends_on = [ kubernetes_namespace.argocd ]
   metadata {
@@ -69,6 +58,7 @@ resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
     "client-id" = var.argo_workflows_client_id
   }
 }
+
 resource "kubernetes_secret" "argo-workflows-spaces" {
   depends_on = [ kubernetes_namespace.argo-workflows ]
   metadata {
@@ -88,6 +78,7 @@ resource "kubernetes_secret" "argo-workflows-spaces" {
     "spaces_secret_key" = var.do_spaces_secret_key
   }
 }
+
 resource "kubernetes_secret" "fugue-state-argocd-secret" {
   depends_on = [ kubernetes_namespace.argocd ]
   metadata {
@@ -108,6 +99,7 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
     "webhook.github.secret" = var.argocd_webhook_secret
   }
 }
+
 resource "kubernetes_secret" "docker-cfg" {
   depends_on = [ kubernetes_namespace.ui ]
   metadata {
@@ -120,27 +112,4 @@ resource "kubernetes_secret" "docker-cfg" {
   }
 
   type = "kubernetes.io/dockerconfigjson"
-}
-
-resource "kubernetes_secret" "keycloak-secret" {
-  depends_on = [ kubernetes_namespace.keycloak ]
-  metadata {
-    name = "keycloak-secret"
-    namespace = "keycloak"
-  }
-  data = {
-    "keycloak-user" = var.keycloak_user
-    "keycloak-password" = var.keycloak_password
-    "external-db" = digitalocean_kubernetes_cluster.fugue-state-cluster.name
-    "external-db-host" = digitalocean_database_cluster.postgres.host
-    "external-db-port" = digitalocean_database_cluster.postgres.port
-    "external-db-user" = digitalocean_database_user.keycloak-db-user.name
-    "external-db-password" = digitalocean_database_user.keycloak-db-user.password
-    "USERS_REALM" = var.users_realm
-    "USERS_REALM_PUBLIC_KEY" = var.users_realm_public_key
-    "USERS_REALM_PRIVATE_KEY" = var.users_realm_private_key
-    "USERS_REALM_BASEURL" = var.users_realm_baseurl
-    "USERS_REALM_USERNAME" = var.users_realm_username
-    "USERS_REALM_USER_PASSWORD" = var.users_realm_user_password
-  }
 }

@@ -14,13 +14,6 @@ resource "digitalocean_domain" "fuguestate" {
   name = "fuguestate.io"
 }
 
-resource "digitalocean_record" "github-challenge" {
-  domain = digitalocean_domain.fugue-state.id
-  type   = "TXT"
-  name   = var.gh_txt_record
-  value  = var.gh_text_record_value
-}
-
 resource "digitalocean_record" "a-fugue-state" {
   depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
   domain = digitalocean_domain.fugue-state.id

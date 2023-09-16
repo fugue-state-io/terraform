@@ -71,20 +71,6 @@ variable "do_token" {
   sensitive = true
 }
 
-variable "helm_repo_token" {
-  sensitive = true
-}
-
-variable "gh_txt_record" {
-  sensitive = true
-  default = "_github-challenge-fugue-state-io-org"
-}
-
-variable "gh_text_record_value" {
-  sensitive = true
-  default ="d6c274a1ac"
-}
-
 variable "oauth_client_id" {
   sensitive = true
 }
@@ -102,38 +88,6 @@ variable "argocd_webhook_secret" {
 }
 
 variable "oauth_client_secret" {
-  sensitive = true
-}
-
-variable "keycloak_user" {
-  sensitive = true
-}
-
-variable "keycloak_password" {
-  sensitive = true
-}
-
-variable "users_realm" {
-  sensitive = true
-}
-
-variable "users_realm_public_key" {
-  sensitive = true
-}
-
-variable "users_realm_private_key" {
-  sensitive = true
-}
-
-variable "users_realm_baseurl" {
-  sensitive = true
-}
-
-variable "users_realm_username" {
-  sensitive = true
-}
-
-variable "users_realm_user_password" {
   sensitive = true
 }
 

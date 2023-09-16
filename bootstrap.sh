@@ -10,6 +10,7 @@ export WORKING_DIRECTORY=$(dirname $BOOTSTRAP_PATH)
 # for wildcard dns record
 # export TF_VAR_do_token=""
 # in git ignore locally sourced configuration kubeconfig
+mkdir $WORKING_DIRECTORY/.sensitive
 cd $WORKING_DIRECTORY/.sensitive
 
 if [ -f "ca.crt" ]; then
@@ -37,13 +38,3 @@ else
   openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
   openssl rsa -pubout -in private_key.pem -out public_key.pem
 fi
-
-# keycloak vars
-export TF_VAR_keycloak_user="keycloak"
-#export TF_VAR_keycloak_password=""
-export TF_VAR_users_realm="fugue-state"
-export TF_VAR_users_realm_public_key="$(openssl enc -A -base64 -in public_key.pem)"
-export TF_VAR_users_realm_private_key="$(openssl enc -A -base64 -in private_key.pem)"
-export TF_VAR_users_realm_baseurl="keycloak.fugue-state.io"
-export TF_VAR_users_realm_username="keycloak"
-#export TF_VAR_users_realm_user_password=""

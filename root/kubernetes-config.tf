@@ -17,7 +17,7 @@ resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
   name       = "autoscale-pool-01"
   size       = "s-1vcpu-2gb"
   auto_scale = true
-  min_nodes  = 2
+  min_nodes  = 1
   max_nodes  = 7
 }
 
@@ -27,8 +27,8 @@ resource "digitalocean_kubernetes_node_pool" "autoscale-pool-02" {
   name       = "autoscale-pool-02"
   size       = "s-4vcpu-8gb"
   auto_scale = true
-  min_nodes  = 1
-  max_nodes  = 2
+  min_nodes  = 2
+  max_nodes  = 3
 }
 
 resource "local_file" "kubeconfig" {

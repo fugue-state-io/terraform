@@ -118,6 +118,16 @@ resource "kubernetes_namespace" "ci" {
   }
 }
 
+resource "kubernetes_namespace" "minio" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "minio"
+  }
+}
 resource "kubernetes_namespace" "grafana" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {

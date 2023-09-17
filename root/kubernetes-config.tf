@@ -21,6 +21,16 @@ resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
   max_nodes  = 7
 }
 
+resource "digitalocean_kubernetes_node_pool" "autoscale-pool-02" {
+  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
+  cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
+  name       = "autoscale-pool-02"
+  size       = "s-4vcpu-8gb"
+  auto_scale = true
+  min_nodes  = 1
+  max_nodes  = 2
+}
+
 resource "local_file" "kubeconfig" {
   lifecycle {
     ignore_changes = all

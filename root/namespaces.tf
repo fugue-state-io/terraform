@@ -52,6 +52,36 @@ resource "kubernetes_namespace" "keycloak" {
   }
 }
 
+resource "kubernetes_namespace" "fluentd" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "fluentd"
+  }
+}
+resource "kubernetes_namespace" "kibana" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "kibana"
+  }
+}
+resource "kubernetes_namespace" "elasticsearch" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "elasticsearch"
+  }
+}
 resource "kubernetes_namespace" "ui" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {

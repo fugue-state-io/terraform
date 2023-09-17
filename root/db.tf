@@ -21,6 +21,18 @@ resource "digitalocean_database_user" "keycloak-db-user" {
   name       = "keycloak-user"
 }
 
+resource "digitalocean_database_db" "postgres-db" {
+  depends_on = [ digitalocean_database_cluster.postgres ]
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "postgres"
+}
+
+resource "digitalocean_database_user" "argo-db-user" {
+  depends_on = [ digitalocean_database_cluster.postgres ]
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "argo-user"
+}
+
 resource "digitalocean_database_firewall" "postgres-fw" {
   depends_on = [ digitalocean_database_cluster.postgres ]
   cluster_id = digitalocean_database_cluster.postgres.id

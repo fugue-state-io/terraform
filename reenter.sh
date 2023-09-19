@@ -13,7 +13,7 @@ terraform init --backend-config="access_key=$DO_SPACES_ACCESS_KEY" --backend-con
 export TF_VAR_do_token=""
 export TF_VAR_oauth_client_id=""
 export TF_VAR_oauth_client_secret=""
-export TF_VAR_=""
+export TF_VAR_argocd_webhook_secret=""
 export TF_VAR_=""
 export TF_VAR_=""
 export TF_VAR_=""

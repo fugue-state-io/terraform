@@ -3,10 +3,7 @@ export BOOTSTRAP_PATH=$(realpath "$0")
 export WORKING_DIRECTORY=$(dirname $BOOTSTRAP_PATH)
 
 # bootstrap backend
-# export DO_SPACES_ACCESS_KEY=""
-# export DO_SPACES_SECRET_KEY=""
-# export DIGITALOCEAN_TOKEN=""
-# terraform init --backend-config="access_key=$DO_SPACES_ACCESS_KEY" --backend-config="secret_key=$DO_SPACES_SECRET_KEY"
+
 # for wildcard dns record
 # export TF_VAR_do_token=""
 # in git ignore locally sourced configuration kubeconfig

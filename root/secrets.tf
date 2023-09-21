@@ -36,6 +36,8 @@ resource "kubernetes_secret" "ci-secrets" {
   }
   data = {
     "github-webhook-secret" = var.github_webhook_secret
+    "spaces_access_id" = var.do_spaces_access_id
+    "spaces_secret_key" = var.do_spaces_secret_key
   }
 }
 

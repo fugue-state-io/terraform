@@ -21,12 +21,6 @@ else
   --ca ca.crt --ca-key ca.key
 fi
 
-# github App integration
-# https://github.com/cli/oauth/issues/1#issuecomment-754713746
-# it is a-okay to hard code and expose these things
-export TF_VAR_oauth_client_id="Iv1.c3e22ab5c0ec2971"
-export TF_VAR_oauth_client_secret="f5d0be52b8e8cbb95b230977355f5b7de578faab"
-
 # github app for argocd hooks/oauth
 # .sensitive/githubAppPrivateKey
 if [ -f "private_key.pem" ]; then

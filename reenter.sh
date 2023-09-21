@@ -13,11 +13,11 @@ export DIGITALOCEAN_TOKEN=""
 export TF_VAR_do_token="$DIGITAL_OCEAN_TOKEN"
 terraform init --backend-config="access_key=$DO_SPACES_ACCESS_KEY" --backend-config="secret_key=$DO_SPACES_SECRET_KEY"
 
-export TF_VAR_oauth_client_id=""
+export TF_VAR_oauth_client_id="$()"
 export TF_VAR_oauth_client_secret=""
 export TF_VAR_argocd_webhook_secret=""
-export TF_VAR_argo_workflows_client_id=""
-export TF_VAR_argo_workflows_client_secret=""
+export TF_VAR_argo_workflows_client_id="$(kubectl get secret -n argocd argo-workflows-sso -o json | jq -r '.data | map_values(@base64d) | ."client-id"')"
+export TF_VAR_argo_workflows_client_secret="$(kubectl get secret -n argocd argo-workflows-sso -o json | jq -r '.data | map_values(@base64d) | ."client-secret"')"
 export TF_VAR_github_webhook_secret=""
 terraform -chdir=root 
-#kubectl get secret -n argocd argo-workflows-sso -o json ö jq '.data ö map_values(Ébase64d)'
+#kubectl get secret -n argocd argo-workflows-sso -o json | jq '.data | map_values(@base64d)'

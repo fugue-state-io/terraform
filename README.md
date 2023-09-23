@@ -8,4 +8,5 @@ Run this to boot up the cluster and associated resources locally.
 ## kill.sh
 Run this to delete the cluster and associated resources locally.
 
-
+## reenter.sh
+Run this to load the config from the cluster

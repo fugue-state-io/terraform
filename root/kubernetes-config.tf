@@ -21,6 +21,16 @@ resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
   max_nodes  = 7
 }
 
+
+resource "local_file" "kubeconfig" {
+  lifecycle {
+    ignore_changes = all
+  }
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  content    = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].raw_config
+  filename   = "${path.root}/../.sensitive/kubeconfig"
+}
+
 data "digitalocean_loadbalancer" "fugue-state-cluster-loadbalancer" {
   depends_on = [ helm_release.nginx-ingress ]
   name = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)

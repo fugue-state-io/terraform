@@ -113,3 +113,17 @@ resource "kubernetes_secret" "docker-cfg" {
 
   type = "kubernetes.io/dockerconfigjson"
 }
+
+resource "kubernetes_secret" "docker-cfg-ci" {
+  depends_on = [ kubernetes_namespace.ci ]
+  metadata {
+    name = "docker-cfg"
+    namespace = "ci"
+  }
+
+  data = {
+    ".dockerconfigjson" = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+}

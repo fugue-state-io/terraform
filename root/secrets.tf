@@ -108,10 +108,10 @@ resource "kubernetes_secret" "docker-cfg" {
   }
 
   data = {
-    ".dockerconfigjson" = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials
+    ".dockercfg" = base64encode(digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials)
   }
 
-  type = "kubernetes.io/dockerconfigjson"
+  type = "kubernetes.io/dockercfg"
 }
 
 resource "kubernetes_secret" "docker-cfg-ci" {
@@ -122,8 +122,8 @@ resource "kubernetes_secret" "docker-cfg-ci" {
   }
 
   data = {
-    ".dockerconfigjson" = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials
+    ".dockercfg" = base64encode(digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials)
   }
 
-  type = "kubernetes.io/dockerconfigjson"
+  type = "kubernetes.io/dockercfg"
 }

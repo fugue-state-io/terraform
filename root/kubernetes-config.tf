@@ -4,6 +4,7 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
   region  = "nyc3"
   version = "1.28.2-do.0"
   vpc_uuid = digitalocean_vpc.fugue-state-vpc.id
+  registry_integration = true
   node_pool {
     name       = "worker-pool"
     size       = "s-1vcpu-2gb"

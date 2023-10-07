@@ -99,3 +99,17 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
     "webhook.github.secret" = var.argocd_webhook_secret
   }
 }
+
+resource "kubernetes_secret" "docker-config-ci" {
+  depends_on = [ kubernetes_namespace.ci ]
+  metadata {
+    name = "docker-config"
+    namespace = "ci"
+  }
+
+  data = {
+    ".dockerconfigjson" = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+}

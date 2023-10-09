@@ -19,4 +19,5 @@ resource "local_file" "docker_credentials" {
 
 resource "digitalocean_container_registry_docker_credentials" "fugue-state-registry-credentials" {
   registry_name = digitalocean_container_registry.fugue-state-registry.name
+  write = true
 }

@@ -108,7 +108,7 @@ resource "kubernetes_secret" "docker-config-ci" {
   }
 
   data = {
-    ".dockerconfigjson" = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials
+    "config.json" = digitalocean_container_registry_docker_credentials.fugue-state-registry-credentials.docker_credentials
   }
 
   type = "kubernetes.io/dockerconfigjson"

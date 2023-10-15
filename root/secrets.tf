@@ -117,7 +117,7 @@ resource "kubernetes_secret" "docker-config-ci" {
 resource "kubernetes_secret" "github-app-jwt" {
   depends_on = [ kubernetes_namespace.ci ]
   metadata {
-    name = "docker-config"
+    name = "github-app-jwt"
     namespace = "ci"
   }
 

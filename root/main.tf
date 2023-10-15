@@ -107,6 +107,13 @@ variable "github_app_jwt" {
   sensitive = true
 }
 
+variable "github_app_client_id" {
+  sensitive = true
+}
+variable "github_app_client_secret" {
+  sensitive = true
+}
+
 resource "digitalocean_project" "fugue-state-io" {
   description  = "fugue-state-io"
   environment  = "Production"

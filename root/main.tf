@@ -103,6 +103,10 @@ variable "do_spaces_secret_key" {
   sensitive = true
 }
 
+variable "github_app_jwt" {
+  sensitive = true
+}
+
 resource "digitalocean_project" "fugue-state-io" {
   description  = "fugue-state-io"
   environment  = "Production"

@@ -113,3 +113,17 @@ resource "kubernetes_secret" "docker-config-ci" {
 
   type = "Opaque"
 }
+
+resource "kubernetes_secret" "github-app-jwt" {
+  depends_on = [ kubernetes_namespace.ci ]
+  metadata {
+    name = "docker-config"
+    namespace = "ci"
+  }
+
+  data = {
+    "github-app-jwt" = var.github_app_jwt
+  }
+
+  type = "Opaque"
+}

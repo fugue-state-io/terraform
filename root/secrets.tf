@@ -124,7 +124,7 @@ resource "kubernetes_secret" "github-auth" {
   data = {
     "github-app-jwt" = var.github_app_jwt
     "github-app-client-id" = var.github_app_client_id
-    "github-app-client-secret" = var.github_app_client_secret
+    "github-app-client-secret" = base64encode(var.github_app_client_secret)
   }
 
   type = "Opaque"

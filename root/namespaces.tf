@@ -82,6 +82,7 @@ resource "kubernetes_namespace" "elasticsearch" {
     name = "elasticsearch"
   }
 }
+
 resource "kubernetes_namespace" "ui" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {
@@ -93,6 +94,16 @@ resource "kubernetes_namespace" "ui" {
   }
 }
 
+resource "kubernetes_namespace" "api" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "api"
+  }
+}
 resource "kubernetes_namespace" "argo-workflows" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {

@@ -18,7 +18,7 @@ else
   export TF_VAR_do_spaces_secret_key="$DO_SPACES_SECRET_KEY"
   terraform -chdir=root init --backend-config="access_key=$DO_SPACES_ACCESS_KEY" --backend-config="secret_key=$DO_SPACES_SECRET_KEY"
 
-  kubectl get secret -n ci github-auth -o json | jq -r '.data | map_values(@base64d) | ."github-app.pem"' | xargs echo -n > .sensitive/github_app.pem
+  kubectl get secret -n ci github-auth -o json | jq -r '.data | map_values(@base64d) | ."github-app.pem"' | sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' > .sensitive/github_app.pem
   export TF_VAR_oauth_client_id="$(kubectl get secret -n argocd fugue-state-argocd-secret -o json | jq -r '.data | map_values(@base64d) | ."dexId"')"
   export TF_VAR_oauth_client_secret="$(kubectl get secret -n argocd fugue-state-argocd-secret -o json | jq -r '.data | map_values(@base64d) | ."dexSecret"')"
   

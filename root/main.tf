@@ -103,10 +103,6 @@ variable "do_spaces_secret_key" {
   sensitive = true
 }
 
-variable "github_app_jwt" {
-  sensitive = true
-}
-
 variable "github_app_client_id" {
   sensitive = true
 }

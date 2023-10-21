@@ -20,6 +20,9 @@ else
 
   export TF_VAR_oauth_client_id="$(kubectl get secret -n argocd fugue-state-argocd-secret -o json | jq -r '.data | map_values(@base64d) | ."dexId"')"
   export TF_VAR_oauth_client_secret="$(kubectl get secret -n argocd fugue-state-argocd-secret -o json | jq -r '.data | map_values(@base64d) | ."dexSecret"')"
+  kubectl get secret -n ci github-auth -o json | jq -r '.data | map_values(@base64d) | ."github-app.pem" > .sensitive/github_app.pem
+  export TF_VAR_github_app_client_id="$(kubectl get secret -n ci github-auth -o json | jq -r '.data | map_values(@base64d) | ."github-app-client-id"')"
+  export TF_VAR_oauth_client_id="$(kubectl get secret -n ci github-auth -o json | jq -r '.data | map_values(@base64d) | ."github-app-client-secret"')"
 
   export TF_VAR_argocd_webhook_secret="$(kubectl get secret -n argo-workflows argo-workflows-sso -o json | jq -r '.data | map_values(@base64d) | ."client-id"')"
   export TF_VAR_argo_workflows_client_id="$(kubectl get secret -n argo-workflows argo-workflows-sso -o json | jq -r '.data | map_values(@base64d) | ."client-id"')"

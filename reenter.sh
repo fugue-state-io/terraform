@@ -10,8 +10,8 @@ if [[ `git status --porcelain` ]]; then
   exit 1
 else
   doctl kubernetes cluster kubeconfig save fugue-state-cluster
-  export DO_SPACES_ACCESS_KEY="$(kubectl get secret -n argo-workflows argo-workflows-spaces -o json | jq -r '.data | map_values(@base64d) | ."spaces_access_id"')"
-  export DO_SPACES_SECRET_KEY="$(kubectl get secret -n argo-workflows argo-workflows-spaces -o json | jq -r '.data | map_values(@base64d) | ."spaces_secret_key"')"
+  # export DO_SPACES_ACCESS_KEY="$(kubectl get secret -n argo-workflows argo-workflows-spaces -o json | jq -r '.data | map_values(@base64d) | ."spaces_access_id"')"
+  # export DO_SPACES_SECRET_KEY="$(kubectl get secret -n argo-workflows argo-workflows-spaces -o json | jq -r '.data | map_values(@base64d) | ."spaces_secret_key"')"
 
   export TF_VAR_do_token="$DIGITALOCEAN_TOKEN"
   export TF_VAR_do_spaces_access_id="$DO_SPACES_ACCESS_KEY"

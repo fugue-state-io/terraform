@@ -212,3 +212,14 @@ resource "kubernetes_namespace" "scylla-manager" {
     name = "scylla-manager"
   }
 }
+
+resource "kubernetes_namespace" "scylla-operator" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "scylla-operator"
+  }
+}

@@ -190,3 +190,25 @@ resource "kubernetes_namespace" "etl" {
     name = "etl"
   }
 }
+
+resource "kubernetes_namespace" "scylla" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "scylla"
+  }
+}
+
+resource "kubernetes_namespace" "scylla-manager" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "scylla-manager"
+  }
+}

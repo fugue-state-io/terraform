@@ -136,6 +136,16 @@ resource "kubernetes_namespace" "argocd" {
     name = "argocd"
   }
 }
+resource "kubernetes_namespace" "argocd" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "argo-cd-image-updater"
+  }
+}
 
 resource "kubernetes_namespace" "argo-events" {
   depends_on = [ helm_release.nginx-ingress ]

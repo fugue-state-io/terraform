@@ -164,6 +164,7 @@ resource "kubernetes_secret" "fugue-state-repo" {
     "githubAppId" = var.github_app_id
     "githubAppInstallationId" = var.github_app_installation_id
     "url" = var.github_repo_url
+    "project" = "fugue-state"
     "type" = "git"
   }
 

@@ -102,7 +102,15 @@ variable "do_spaces_access_id" {
 variable "do_spaces_secret_key" {
   sensitive = true
 }
-
+variable "github_app_id" {
+  sensitive = true
+}
+variable "github_app_installation_id" {
+  sensitive = true
+}
+variable "github_repo_url" {
+  sensitive = true
+}
 variable "github_app_client_id" {
   sensitive = true
 }

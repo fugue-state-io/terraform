@@ -148,3 +148,24 @@ resource "kubernetes_secret" "github-auth" {
 
   type = "Opaque"
 }
+
+resource "kubernetes_secret" "fugue-state-repo" {
+  depends_on = [ kubernetes_namespace.ci ]
+  metadata {
+    name = "fugue-state-repo"
+    namespace = "argocd"
+    labels = {
+      "argocd.argoproj.io/secret-type" = "repository"
+    }
+  }
+
+  data = {
+    "githubAppPrivateKey" = file("${path.cwd}/.sensitive/github_app.pem")
+    "githubAppId" = var.github_app_id
+    "githubAppInstallationId" = var.github_app_installation_id
+    "url" = var.github_repo_url
+    "type" = "git"
+  }
+
+  type = "Opaque"
+}

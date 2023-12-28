@@ -160,7 +160,7 @@ resource "kubernetes_secret" "fugue-state-repo" {
   }
 
   data = {
-    "githubAppPrivateKey" = file("${path.cwd}/.sensitive/github_app.pem")
+    "githubAppPrivateKey" = trimspace(file("${path.cwd}/.sensitive/github_app.pem"))
     "githubAppId" = var.github_app_id
     "githubAppInstallationId" = var.github_app_installation_id
     "url" = var.github_repo_url

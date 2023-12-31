@@ -1,7 +1,4 @@
 #!/bin/bash
-export BOOTSTRAP_PATH=$(realpath "$0")
-export WORKING_DIRECTORY=$(dirname $BOOTSTRAP_PATH)
-
 doctl kubernetes cluster kubeconfig save fugue-state-cluster
 export DO_SPACES_ACCESS_KEY="$(kubectl get secret -n argo-workflows argo-workflows-spaces -o json | jq -r '.data | map_values(@base64d) | ."spaces_access_id"')"
 export DO_SPACES_SECRET_KEY="$(kubectl get secret -n argo-workflows argo-workflows-spaces -o json | jq -r '.data | map_values(@base64d) | ."spaces_secret_key"')"
@@ -25,3 +22,6 @@ export TF_VAR_argo_workflows_client_id="$(kubectl get secret -n argo-workflows a
 export TF_VAR_argo_workflows_client_secret="$(kubectl get secret -n argo-workflows argo-workflows-sso -o json | jq -r '.data | map_values(@base64d) | ."client-secret"')"
 
 export TF_VAR_github_webhook_secret="$(kubectl get secret -n ci ci-secrets -o json | jq -r '.data | map_values(@base64d) | ."github-webhook-secret"')"
+
+export TF_VAR_do_cdn_spaces_access_id="$(kubectl get secret -n api api-secrets -o json | jq -r '.data | map_values(@base64d) | ."FUGUE_STATE_CDN_ACCESS_ID"')"
+export TF_VAR_do_cdn_spaces_secret_key="$(kubectl get secret -n api api-secrets -o json | jq -r '.data | map_values(@base64d) | ."FUGUE_STATE_CDN_SECRET_KEY"')"

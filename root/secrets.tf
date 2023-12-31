@@ -41,6 +41,19 @@ resource "kubernetes_secret" "ci-secrets" {
   }
 }
 
+resource "kubernetes_secret" "api-secrets" {
+  depends_on = [ kubernetes_namespace.api ]
+  metadata {
+    name = "api-secrets"
+    namespace = "api"
+  }
+  data = {
+    "FUGUE_STATE_CDN_ACCESS_ID" = var.do_cdn_spaces_access_id
+    "FUGUE_STATE_CDN_SECRET_KEY" = var.do_cdn_spaces_secret_key
+  }
+}
+
+
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   depends_on = [ kubernetes_namespace.argo-workflows ]
   metadata {

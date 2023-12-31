@@ -3,11 +3,11 @@ terraform {
   required_version = ">=1.2.4"
   required_providers {
     digitalocean = {
-      source = "digitalocean/digitalocean"
+      source  = "digitalocean/digitalocean"
       version = "~> 2.28.1"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = ">= 2.7.0"
     }
     docker = {
@@ -15,7 +15,7 @@ terraform {
       version = "3.0.2"
     }
     helm = {
-      source = "hashicorp/helm"
+      source  = "hashicorp/helm"
       version = ">= 2.8.0"
     }
     kubectl = {
@@ -34,8 +34,8 @@ terraform {
 }
 
 provider "kubernetes" {
-  host             = digitalocean_kubernetes_cluster.fugue-state-cluster.endpoint
-  token            = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].token
+  host  = digitalocean_kubernetes_cluster.fugue-state-cluster.endpoint
+  token = digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].token
   cluster_ca_certificate = base64decode(
     digitalocean_kubernetes_cluster.fugue-state-cluster.kube_config[0].cluster_ca_certificate
   )
@@ -61,8 +61,8 @@ provider "kubectl" {
 }
 
 provider "digitalocean" {
-  token = var.do_token
-  spaces_access_id = var.do_spaces_access_id
+  token             = var.do_token
+  spaces_access_id  = var.do_spaces_access_id
   spaces_secret_key = var.do_spaces_secret_key
 }
 
@@ -102,6 +102,15 @@ variable "do_spaces_access_id" {
 variable "do_spaces_secret_key" {
   sensitive = true
 }
+
+variable "do_cdn_spaces_access_id" {
+  sensitive = true
+}
+
+variable "do_cdn_spaces_secret_key" {
+  sensitive = true
+}
+
 variable "github_app_id" {
   sensitive = true
 }
@@ -119,9 +128,9 @@ variable "github_app_client_secret" {
 }
 
 resource "digitalocean_project" "fugue-state-io" {
-  description  = "fugue-state-io"
-  environment  = "Production"
-  name         = "fugue-state-io"
-  purpose      = "Web Application"
-  is_default   = false
+  description = "fugue-state-io"
+  environment = "Production"
+  name        = "fugue-state-io"
+  purpose     = "Web Application"
+  is_default  = false
 }

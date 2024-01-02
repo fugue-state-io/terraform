@@ -70,47 +70,39 @@ provider "digitalocean" {
 variable "do_token" {
   sensitive = true
 }
-
 variable "oauth_client_id" {
   sensitive = true
 }
-
 variable "argo_workflows_client_id" {
   sensitive = true
 }
-
 variable "argo_workflows_client_secret" {
   sensitive = true
 }
-
 variable "argocd_webhook_secret" {
   sensitive = true
 }
-
 variable "oauth_client_secret" {
   sensitive = true
 }
-
 variable "github_webhook_secret" {
   sensitive = true
 }
-
 variable "do_spaces_access_id" {
   sensitive = true
 }
-
 variable "do_spaces_secret_key" {
   sensitive = true
 }
-
 variable "do_cdn_spaces_access_id" {
   sensitive = true
 }
-
 variable "do_cdn_spaces_secret_key" {
   sensitive = true
 }
-
+variable "fugue_state_api_url" {
+  sensitive = true
+}
 variable "github_app_id" {
   sensitive = true
 }

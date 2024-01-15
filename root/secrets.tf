@@ -62,7 +62,27 @@ resource "kubernetes_secret" "ui-secrets" {
     "NEXT_PUBLIC_FUGUE_STATE_API_URL" = var.fugue_state_api_url
   }
 }
-
+resource "kubernetes_secret" "keycloak-secrets" {
+  depends_on = [ kubernetes_namespace.keycloak ]
+  metadata {
+    name = "keycloak-secrets"
+    namespace = "keycloak"
+  }
+  data = {
+    "password" = digitalocean_database_user.keycloak-db-user.password
+  }
+}
+resource "kubernetes_secret" "keycloak-secrets-env" {
+  depends_on = [ kubernetes_namespace.keycloak ]
+  metadata {
+    name = "keycloak-secrets-env"
+    namespace = "keycloak"
+  }
+  data = {
+    "KEYCLOAK_USER" = "keycloak"
+    "KEYCLOAK_PASSWORD" = var.keycloak_password
+  }
+}
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   depends_on = [ kubernetes_namespace.argo-workflows ]
   metadata {

@@ -118,6 +118,9 @@ variable "github_app_client_id" {
 variable "github_app_client_secret" {
   sensitive = true
 }
+variable "keycloak_password" {
+  sensitive = true
+}
 
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"

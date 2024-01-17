@@ -79,8 +79,8 @@ resource "kubernetes_secret" "keycloak-secrets-env" {
     namespace = "keycloak"
   }
   data = {
-    "KEYCLOAK_USER" = "keycloak"
-    "KEYCLOAK_PASSWORD" = var.keycloak_password
+    "KEYCLOAK_ADMIN_USER" = "keycloak"
+    "KEYCLOAK_ADMIN_PASSWORD" = var.keycloak_password
   }
 }
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {

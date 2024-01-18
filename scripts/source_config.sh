@@ -27,3 +27,4 @@ export TF_VAR_do_cdn_spaces_access_id="$(kubectl get secret -n api api-secrets -
 export TF_VAR_do_cdn_spaces_secret_key="$(kubectl get secret -n api api-secrets -o json | jq -r '.data | map_values(@base64d) | ."FUGUE_STATE_CDN_SECRET_KEY"')"
 
 export TF_VAR_fugue_state_api_url="$(kubectl get secret -n ui ui-secrets -o json | jq -r '.data | map_values(@base64d) | ."NEXT_PUBLIC_FUGUE_STATE_API_URL"')"
+export TF_VAR_keycloak_password="$(kubectl get secret -n keycloak keycloak-env-secrets -o json | jq -r '.data | map_values(@base64d) | ."KEYCLOAK_ADMIN_PASSWORD"')"

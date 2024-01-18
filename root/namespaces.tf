@@ -169,14 +169,14 @@ resource "kubernetes_namespace" "ci" {
   }
 }
 
-resource "kubernetes_namespace" "minio" {
+resource "kubernetes_namespace" "oauth2-proxy" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {
     annotations = {
       name = "linkerd.io/inject"
       value = "enabled"
     }
-    name = "minio"
+    name = "oauth2-proxy"
   }
 }
 resource "kubernetes_namespace" "grafana" {

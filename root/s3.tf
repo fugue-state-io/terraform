@@ -15,8 +15,5 @@ resource "digitalocean_spaces_bucket" "fugue-state-cdn" {
   lifecycle_rule {
     abort_incomplete_multipart_upload_days = 1
     enabled = true
-      expiration {
-        days = 1
-      }
   }
 }

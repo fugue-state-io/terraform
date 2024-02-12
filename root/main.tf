@@ -121,7 +121,24 @@ variable "github_app_client_secret" {
 variable "keycloak_password" {
   sensitive = true
 }
-
+variable "nextauth_secret" {
+  sensitive = true
+}
+variable "nextauth_url" {
+  sensitive = true
+}
+variable "keycloak_secret" {
+  sensitive = true
+}
+variable "keycloak_issuer" {
+  sensitive = true
+}
+variable "keycloak_id" {
+  sensitive = true
+}
+variable "fugue_state_bucket" {
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

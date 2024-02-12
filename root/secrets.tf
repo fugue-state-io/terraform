@@ -52,14 +52,21 @@ resource "kubernetes_secret" "api-secrets" {
     "FUGUE_STATE_CDN_SECRET_KEY" = var.do_cdn_spaces_secret_key
   }
 }
-resource "kubernetes_secret" "ui-secrets" {
-  depends_on = [ kubernetes_namespace.ui ]
+resource "kubernetes_secret" "ci-ui-secrets" {
+  depends_on = [ kubernetes_namespace.ci ]
   metadata {
-    name = "ui-secrets"
-    namespace = "ui"
+    name = "ci-ui-secrets"
+    namespace = "ci"
   }
   data = {
-    "NEXT_PUBLIC_FUGUE_STATE_API_URL" = var.fugue_state_api_url
+    "NEXTAUTH_SECRET" = var.nextauth_secret
+    "NEXTAUTH_URL" = var.nextauth_url
+    "KEYCLOAK_ID" = var.keycloak_id
+    "KEYCLOAK_SECRET" = var.keycloak_secret
+    "KEYCLOAK_ISSUER" = var.keycloak_issuer
+    "FUGUE_STATE_CDN_ACCESS_ID" = var.do_cdn_spaces_access_id
+    "FUGUE_STATE_CDN_SECRET_KEY" = var.do_cdn_spaces_secret_key
+    "FUGUE_STATE_BUCKET" = var.fugue_state_bucket
   }
 }
 resource "kubernetes_secret" "keycloak-secrets" {

@@ -168,7 +168,16 @@ resource "kubernetes_namespace" "ci" {
     name = "ci"
   }
 }
-
+resource "kubernetes_namespace" "zudell-io" {
+  depends_on = [ helm_release.nginx-ingress ]
+  metadata {
+    annotations = {
+      name = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "zudell-io"
+  }
+}
 resource "kubernetes_namespace" "oauth2-proxy" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {

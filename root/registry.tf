@@ -1,7 +1,7 @@
 # Create a new container registry
 resource "digitalocean_container_registry" "fugue-state-registry" {
   name                   = "fugue-state-registry"
-  subscription_tier_slug = "basic"
+  subscription_tier_slug = "professional"
   region = "nyc3"
 }
 

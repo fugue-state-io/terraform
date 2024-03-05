@@ -204,14 +204,15 @@ resource "kubernetes_secret" "fugue-state-repo" {
     name = "fugue-state-repo"
     namespace = "argocd"
     labels = {
-      "argocd.argoproj.io/secret-type" = "repo-creds"
+      "argocd.argoproj.io/secret-type" = "repository"
     }
   }
 
   data = {
+    "type" = "git"
     "githubAppPrivateKey" = trimspace(file("${path.cwd}/.sensitive/github_app.pem"))
-    "githubAppId" = var.github_app_id
-    "githubAppInstallationId" = var.github_app_installation_id
+    "githubAppID" = var.github_app_id
+    "githubAppInstallationID" = var.github_app_installation_id
     "url" = var.github_repo_url
   }
 

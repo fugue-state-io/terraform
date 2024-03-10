@@ -52,21 +52,21 @@ resource "kubernetes_secret" "api-secrets" {
     "FUGUE_STATE_CDN_SECRET_KEY" = var.do_cdn_spaces_secret_key
   }
 }
-resource "kubernetes_secret" "ci-ui-secrets" {
-  depends_on = [ kubernetes_namespace.ci ]
+resource "kubernetes_secret" "fugue-state-ui-secrets" {
+  depends_on = [ kubernetes_namespace.ui ]
   metadata {
-    name = "ci-ui-secrets"
-    namespace = "ci"
+    name = "fugue-state-ui-secrets"
+    namespace = "ui"
   }
   data = {
-    "NEXTAUTH_SECRET" = var.nextauth_secret
-    "NEXTAUTH_URL" = var.nextauth_url
-    "KEYCLOAK_ID" = var.keycloak_id
-    "KEYCLOAK_SECRET" = var.keycloak_secret
-    "KEYCLOAK_ISSUER" = var.keycloak_issuer
-    "FUGUE_STATE_CDN_ACCESS_ID" = var.do_cdn_spaces_access_id
-    "FUGUE_STATE_CDN_SECRET_KEY" = var.do_cdn_spaces_secret_key
-    "FUGUE_STATE_BUCKET" = var.fugue_state_bucket
+    "TF_VAR_nextauth_secret" = var.nextauth_secret
+    "TF_VAR_nextauth_url" = var.nextauth_url
+    "TF_VAR_keycloak_id" = var.keycloak_id
+    "TF_VAR_keycloak_secret" = var.keycloak_secret
+    "TF_VAR_keycloak_issuer" = var.keycloak_issuer
+    "TF_VAR_do_cdn_spaces_access_id" = var.do_cdn_spaces_access_id
+    "TF_VAR_do_cdn_spaces_secret_key" = var.do_cdn_spaces_secret_key
+    "TF_VAR_fugue_state_bucket" = var.fugue_state_bucket
   }
 }
 resource "kubernetes_secret" "keycloak-secrets" {

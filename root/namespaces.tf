@@ -5,13 +5,6 @@ resource "kubernetes_namespace" "reloader" {
   }
 }
 
-resource "kubernetes_namespace" "prometheus" {
-  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
-  metadata {
-    name = "prometheus"
-  }
-}
-
 resource "kubernetes_namespace" "linkerd" {
   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
   metadata {
@@ -49,37 +42,6 @@ resource "kubernetes_namespace" "keycloak" {
       value = "enabled"
     }
     name = "keycloak"
-  }
-}
-
-resource "kubernetes_namespace" "fluentd" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "fluentd"
-  }
-}
-resource "kubernetes_namespace" "kibana" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "kibana"
-  }
-}
-resource "kubernetes_namespace" "elasticsearch" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "elasticsearch"
   }
 }
 
@@ -136,16 +98,6 @@ resource "kubernetes_namespace" "argocd" {
     name = "argocd"
   }
 }
-resource "kubernetes_namespace" "argo-cd-image-updater" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "argo-cd-image-updater"
-  }
-}
 
 resource "kubernetes_namespace" "argo-events" {
   depends_on = [ helm_release.nginx-ingress ]
@@ -178,67 +130,13 @@ resource "kubernetes_namespace" "zudell-io" {
     name = "zudell-io"
   }
 }
-resource "kubernetes_namespace" "oauth2-proxy" {
+resource "kubernetes_namespace" "gp-pong" {
   depends_on = [ helm_release.nginx-ingress ]
   metadata {
     annotations = {
       name = "linkerd.io/inject"
       value = "enabled"
     }
-    name = "oauth2-proxy"
-  }
-}
-resource "kubernetes_namespace" "grafana" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "grafana"
-  }
-}
-
-resource "kubernetes_namespace" "etl" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "etl"
-  }
-}
-
-resource "kubernetes_namespace" "scylla" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "scylla"
-  }
-}
-
-resource "kubernetes_namespace" "scylla-manager" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "scylla-manager"
-  }
-}
-
-resource "kubernetes_namespace" "scylla-operator" {
-  depends_on = [ helm_release.nginx-ingress ]
-  metadata {
-    annotations = {
-      name = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "scylla-operator"
+    name = "go-pong"
   }
 }

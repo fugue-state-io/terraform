@@ -100,9 +100,6 @@ variable "do_cdn_spaces_access_id" {
 variable "do_cdn_spaces_secret_key" {
   sensitive = true
 }
-variable "fugue_state_api_url" {
-  sensitive = true
-}
 variable "github_app_id" {
   sensitive = true
 }

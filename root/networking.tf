@@ -3,7 +3,23 @@ resource "digitalocean_vpc" "fugue-state-vpc" {
   region     = "nyc3"
   timeouts {}
 }
-
+resource "digitalocean_domain" "pong-roulette-com" {
+  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
+  name = "pong-roulette.com"
+}
+resource "digitalocean_record" "a-pong-roulette-com" {
+  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
+  domain = digitalocean_domain.pong-roulette-com.id
+  type   = "A"
+  name   = "*"
+  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+}
+resource "digitalocean_record" "at-pong-roulette-com" {
+  domain = digitalocean_domain.pong-roulette-com.id
+  type   = "A"
+  name   = "@"
+  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+}
 resource "digitalocean_domain" "zudell-io" {
   depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
   name = "zudell.io"

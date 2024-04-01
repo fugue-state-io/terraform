@@ -52,6 +52,16 @@ resource "kubernetes_secret" "api-secrets" {
     "FUGUE_STATE_CDN_SECRET_KEY" = var.do_cdn_spaces_secret_key
   }
 }
+resource "kubernetes_secret" "go-pong-server-secrets" {
+  depends_on = [ kubernetes_namespace.api ]
+  metadata {
+    name = "go-pong-server-secrets"
+    namespace = "go-pong"
+  }
+  data = {
+    "SERVER_URL" = var.go_pong_server_url
+  }
+}
 resource "kubernetes_secret" "fugue-state-ui-secrets" {
   depends_on = [ kubernetes_namespace.ui ]
   metadata {

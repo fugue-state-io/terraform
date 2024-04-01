@@ -37,3 +37,5 @@ export TF_VAR_keycloak_secret="$(kubectl get secret -n ui fugue-state-ui-secrets
 export TF_VAR_keycloak_issuer="$(kubectl get secret -n ui fugue-state-ui-secrets -o json | jq -r '.data | map_values(@base64d) | ."TF_VAR_keycloak_issuer"')"
 export TF_VAR_keycloak_id="$(kubectl get secret -n ui fugue-state-ui-secrets -o json | jq -r '.data | map_values(@base64d) | ."TF_VAR_keycloak_id"')"
 export TF_VAR_fugue_state_bucket="$(kubectl get secret -n ui fugue-state-ui-secrets -o json | jq -r '.data | map_values(@base64d) | ."TF_VAR_fugue_state_bucket"')"
+
+export TF_VAR_go_pong_server="$(kubectl get secret -n go-pong go-pong-server-secrets -o json | jq -r '.data | map_values(@base64d) | ."TF_VAR_go_pong_server_url"')"

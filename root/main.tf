@@ -103,6 +103,9 @@ variable "do_cdn_spaces_secret_key" {
 variable "github_app_id" {
   sensitive = true
 }
+variable "go_pong_server_url" {
+  sensitive = true
+}
 variable "github_app_installation_id" {
   sensitive = true
 }

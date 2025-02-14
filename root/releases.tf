@@ -1,8 +1,8 @@
 resource "helm_release" "linkerd" {
-  depends_on = [ kubernetes_namespace.linkerd ]
+  depends_on       = [kubernetes_namespace.linkerd]
   name             = "linkerd"
   repository       = "https://helm.linkerd.io/stable"
-  chart             = "linkerd-crds"
+  chart            = "linkerd-crds"
   cleanup_on_fail  = true
   force_update     = true
   namespace        = kubernetes_namespace.linkerd.metadata[0].name
@@ -10,12 +10,12 @@ resource "helm_release" "linkerd" {
 }
 
 resource "helm_release" "linkerd-control-plane" {
-  depends_on = [ helm_release.linkerd ]
-  name             = "linkerd-control-plane"
-  repository       = "https://helm.linkerd.io/stable"
-  chart            = "linkerd-control-plane"
+  depends_on = [helm_release.linkerd]
+  name       = "linkerd-control-plane"
+  repository = "https://helm.linkerd.io/stable"
+  chart      = "linkerd-control-plane"
 
-  namespace        = kubernetes_namespace.linkerd.metadata[0].name
+  namespace = kubernetes_namespace.linkerd.metadata[0].name
   set_sensitive {
     name  = "identityTrustAnchorsPEM"
     value = file("${path.root}/../.sensitive/ca.crt")
@@ -33,17 +33,18 @@ resource "helm_release" "linkerd-control-plane" {
 }
 
 resource "helm_release" "nginx-ingress" {
-  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
-  name       = "nginx-ingress-controller"
-  namespace  = kubernetes_namespace.nginx-ingress.metadata.0.name
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "nginx-ingress-controller"
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  name       = "ingress-nginx"
+  namespace  = kubernetes_namespace.nginx-ingress.metadata[0].name
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+  version    = "4.12.0" # specify the version you want to install
   set {
-    name  = "service.type"
+    name  = "controller.service.type"
     value = "LoadBalancer"
   }
   set {
-    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-name"
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-name"
     value = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)
   }
 }

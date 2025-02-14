@@ -1,6 +1,6 @@
 # provider
 terraform {
-  required_version = ">=1.2.4"
+  required_version = ">=1.6.3"
   required_providers {
     digitalocean = {
       source  = "digitalocean/digitalocean"
@@ -24,10 +24,14 @@ terraform {
     }
   }
   backend "s3" {
+    # Deactivate a few AWS-specific checks
     skip_credentials_validation = true
+    skip_requesting_account_id  = true
     skip_metadata_api_check     = true
-    endpoint                    = "nyc3.digitaloceanspaces.com"
+    skip_region_validation      = true
+    skip_s3_checksum            = true
     region                      = "us-east-1"
+    endpoints                   = { s3 = "https://nyc3.digitaloceanspaces.com" }
     bucket                      = "fugue-state-backend"
     key                         = "terraform.tfstate"
   }
@@ -68,77 +72,91 @@ provider "digitalocean" {
 
 # variables
 variable "do_token" {
+  type      = string
   sensitive = true
 }
 variable "oauth_client_id" {
+  type      = string
   sensitive = true
 }
-variable "argo_workflows_client_id" {
-  sensitive = true
-}
-variable "argo_workflows_client_secret" {
-  sensitive = true
-}
+
 variable "argocd_webhook_secret" {
+  type      = string
   sensitive = true
 }
 variable "oauth_client_secret" {
-  sensitive = true
-}
-variable "github_webhook_secret" {
+  type      = string
   sensitive = true
 }
 variable "do_spaces_access_id" {
+  type      = string
   sensitive = true
 }
 variable "do_spaces_secret_key" {
+  type      = string
   sensitive = true
 }
 variable "do_cdn_spaces_access_id" {
+  type      = string
   sensitive = true
 }
 variable "do_cdn_spaces_secret_key" {
+  type      = string
   sensitive = true
 }
 variable "github_app_id" {
-  sensitive = true
-}
-variable "go_pong_server_url" {
+  type      = string
   sensitive = true
 }
 variable "github_app_installation_id" {
+  type      = string
   sensitive = true
 }
 variable "github_repo_url" {
+  type      = string
   sensitive = true
 }
 variable "github_app_client_id" {
+  type      = string
   sensitive = true
 }
 variable "github_app_client_secret" {
+  type      = string
+  sensitive = true
+}
+variable "github_webhook_secret" {
+  type      = string
   sensitive = true
 }
 variable "keycloak_password" {
+  type      = string
   sensitive = true
 }
 variable "nextauth_secret" {
+  type      = string
   sensitive = true
 }
 variable "nextauth_url" {
+  type      = string
   sensitive = true
 }
 variable "keycloak_secret" {
+  type      = string
   sensitive = true
 }
 variable "keycloak_issuer" {
+  type      = string
   sensitive = true
 }
 variable "keycloak_id" {
+  type      = string
   sensitive = true
 }
 variable "fugue_state_bucket" {
+  type      = string
   sensitive = true
 }
+
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

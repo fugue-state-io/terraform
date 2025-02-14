@@ -1,9 +1,9 @@
 # resources
 resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
-  name    = "fugue-state-cluster"
-  region  = "nyc3"
-  version = "1.28.2-do.0"
-  vpc_uuid = digitalocean_vpc.fugue-state-vpc.id
+  name                 = "fugue-state-cluster"
+  region               = "nyc3"
+  version              = "1.32.1-do.0"
+  vpc_uuid             = digitalocean_vpc.fugue-state-vpc.id
   registry_integration = true
   node_pool {
     name       = "worker-pool"
@@ -12,35 +12,35 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
   }
 }
 
-resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
-  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
-  cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
-  name       = "autoscale-pool-01"
-  size       = "s-1vcpu-2gb"
-  auto_scale = true
-  min_nodes  = 1
-  max_nodes  = 2
-}
+# resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
+#   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
+#   cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
+#   name       = "autoscale-pool-01"
+#   size       = "s-1vcpu-2gb"
+#   auto_scale = true
+#   min_nodes  = 1
+#   max_nodes  = 2
+# }
 
-resource "digitalocean_kubernetes_node_pool" "autoscale-pool-02" {
-  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
-  cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
-  name       = "autoscale-pool-02"
-  size       = "s-4vcpu-8gb"
-  auto_scale = true
-  min_nodes  = 1
-  max_nodes  = 2
-}
+# resource "digitalocean_kubernetes_node_pool" "autoscale-pool-02" {
+#   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
+#   cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
+#   name       = "autoscale-pool-02"
+#   size       = "s-4vcpu-8gb"
+#   auto_scale = true
+#   min_nodes  = 1
+#   max_nodes  = 2
+# }
 
-resource "digitalocean_kubernetes_node_pool" "autoscale-pool-03" {
-  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
-  cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
-  name       = "autoscale-pool-03"
-  size       = "m-2vcpu-16gb"
-  auto_scale = true
-  min_nodes  = 1
-  max_nodes  = 1
-}
+# resource "digitalocean_kubernetes_node_pool" "autoscale-pool-03" {
+#   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
+#   cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
+#   name       = "autoscale-pool-03"
+#   size       = "m-2vcpu-16gb"
+#   auto_scale = true
+#   min_nodes  = 1
+#   max_nodes  = 1
+# }
 
 resource "local_file" "kubeconfig" {
   lifecycle {
@@ -52,15 +52,15 @@ resource "local_file" "kubeconfig" {
 }
 
 data "digitalocean_loadbalancer" "fugue-state-cluster-loadbalancer" {
-  depends_on = [ helm_release.nginx-ingress ]
-  name = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)
+  depends_on = [helm_release.nginx-ingress]
+  name       = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)
 }
 
 # Kubernetes Cluster
 # Load Balancers
 resource "digitalocean_project_resources" "kubernetes_resources" {
-  depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
-  project = digitalocean_project.fugue-state-io.id
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  project    = digitalocean_project.fugue-state-io.id
   resources = [
     data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.urn,
     digitalocean_kubernetes_cluster.fugue-state-cluster.urn

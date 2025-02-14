@@ -1,67 +1,67 @@
 resource "digitalocean_vpc" "fugue-state-vpc" {
-  name       = "fugue-state-vpc"
-  region     = "nyc3"
+  name   = "fugue-state-vpc"
+  region = "nyc3"
   timeouts {}
 }
-resource "digitalocean_domain" "pong-roulette-com" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  name = "pong-roulette.com"
-}
-resource "digitalocean_record" "a-pong-roulette-com" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  domain = digitalocean_domain.pong-roulette-com.id
-  type   = "A"
-  name   = "*"
-  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
-}
-resource "digitalocean_record" "at-pong-roulette-com" {
-  domain = digitalocean_domain.pong-roulette-com.id
-  type   = "A"
-  name   = "@"
-  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
-}
-resource "digitalocean_domain" "zudell-io" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  name = "zudell.io"
-}
-resource "digitalocean_record" "a-zudell-io" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  domain = digitalocean_domain.zudell-io.id
-  type   = "A"
-  name   = "*"
-  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
-}
-resource "digitalocean_record" "at-zudell-io" {
-  domain = digitalocean_domain.zudell-io.id
-  type   = "A"
-  name   = "@"
-  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
-}
+# resource "digitalocean_domain" "pong-roulette-com" {
+#   depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
+#   name = "pong-roulette.com"
+# }
+# resource "digitalocean_record" "a-pong-roulette-com" {
+#   depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
+#   domain = digitalocean_domain.pong-roulette-com.id
+#   type   = "A"
+#   name   = "*"
+#   value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+# }
+# resource "digitalocean_record" "at-pong-roulette-com" {
+#   domain = digitalocean_domain.pong-roulette-com.id
+#   type   = "A"
+#   name   = "@"
+#   value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+# }
+# resource "digitalocean_domain" "zudell-io" {
+#   depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
+#   name = "zudell.io"
+# }
+# resource "digitalocean_record" "a-zudell-io" {
+#   depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
+#   domain = digitalocean_domain.zudell-io.id
+#   type   = "A"
+#   name   = "*"
+#   value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+# }
+# resource "digitalocean_record" "at-zudell-io" {
+#   domain = digitalocean_domain.zudell-io.id
+#   type   = "A"
+#   name   = "@"
+#   value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+# }
 
 resource "digitalocean_domain" "fugue-state" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  name = "fugue-state.io"
+  depends_on = [data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer]
+  name       = "fugue-state.io"
 }
 
 resource "digitalocean_domain" "fuguestate" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  name = "fuguestate.io"
+  depends_on = [data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer]
+  name       = "fuguestate.io"
 }
 
 resource "digitalocean_record" "a-fugue-state" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  domain = digitalocean_domain.fugue-state.id
-  type   = "A"
-  name   = "*"
-  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+  depends_on = [data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer]
+  domain     = digitalocean_domain.fugue-state.id
+  type       = "A"
+  name       = "*"
+  value      = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
 }
 
 resource "digitalocean_record" "a-fuguestate" {
-  depends_on = [ data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer ]
-  domain = digitalocean_domain.fuguestate.id
-  type   = "A"
-  name   = "*"
-  value  = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
+  depends_on = [data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer]
+  domain     = digitalocean_domain.fuguestate.id
+  type       = "A"
+  name       = "*"
+  value      = data.digitalocean_loadbalancer.fugue-state-cluster-loadbalancer.ip
 }
 
 resource "digitalocean_record" "at-fugue-state" {

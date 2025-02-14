@@ -12,5 +12,5 @@ echo "doctl compute load-balancer list -o json | jq '.[] | select(.name=="fugue-
 doctl compute load-balancer list -o json | jq '.[] | select(.name=="fugue-state-cluster-nginx-ingress") | .id' --raw-output | xargs doctl compute load-balancer delete -f
 
 echo 'terraform -chdir=root destroy -auto-approve'
-terraform -chdir=root destroy -auto-approve
+terraform -chdir=root destroy -var-file=prod.tfvars -auto-approve
 

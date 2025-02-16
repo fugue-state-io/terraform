@@ -27,14 +27,15 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     namespace = "ui"
   }
   data = {
-    "nextauth_secret"          = var.nextauth_secret
-    "nextauth_url"             = var.nextauth_url
-    "keycloak_id"              = var.keycloak_id
-    "keycloak_secret"          = var.keycloak_secret
-    "keycloak_issuer"          = var.keycloak_issuer
-    "do_cdn_spaces_access_id"  = var.do_cdn_spaces_access_id
-    "do_cdn_spaces_secret_key" = var.do_cdn_spaces_secret_key
-    "fugue_state_bucket"       = var.fugue_state_bucket
+    "NEXTAUTH_SECRET"          = var.nextauth_secret
+    "NEXTAUTH_URL"             = var.nextauth_url
+    "NEXTAUTH_URL_INTERNAL"    = var.nextauth_url
+    "KEYCLOAK_ID"              = var.keycloak_id
+    "KEYCLOAK_SECRET"          = var.keycloak_secret
+    "KEYCLOAK_ISSUER"          = var.keycloak_issuer
+    "DO_CDN_SPACES_ACCESS_ID"  = var.do_cdn_spaces_access_id
+    "DO_CDN_SPACES_SECRET_KEY" = var.do_cdn_spaces_secret_key
+    "FUGUE_STATE_BUCKET"       = var.fugue_state_bucket
   }
 }
 # resource "kubernetes_secret" "keycloak-secrets" {

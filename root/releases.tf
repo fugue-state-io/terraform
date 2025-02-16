@@ -34,17 +34,15 @@ resource "helm_release" "linkerd-control-plane" {
 
 resource "helm_release" "nginx-ingress" {
   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
-  name       = "ingress-nginx"
+  name       = "nginx-ingress"
   namespace  = kubernetes_namespace.nginx-ingress.metadata[0].name
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "ingress-nginx"
-  version    = "4.12.0" # specify the version you want to install
+  chart      = "oci://registry-1.docker.io/bitnamicharts/nginx-ingress-controller"
   set {
-    name  = "controller.service.type"
+    name  = "service.type"
     value = "LoadBalancer"
   }
   set {
-    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-name"
+    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-name"
     value = format("%s-nginx-ingress", digitalocean_kubernetes_cluster.fugue-state-cluster.name)
   }
 }

@@ -12,25 +12,25 @@ resource "digitalocean_kubernetes_cluster" "fugue-state-cluster" {
   }
 }
 
-resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
-  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
-  cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
-  name       = "autoscale-pool-01"
-  size       = "s-1vcpu-2gb"
-  auto_scale = true
-  min_nodes  = 1
-  max_nodes  = 2
-}
-
-# resource "digitalocean_kubernetes_node_pool" "autoscale-pool-02" {
-#   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]
+# resource "digitalocean_kubernetes_node_pool" "autoscale-pool-01" {
+#   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
 #   cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
-#   name       = "autoscale-pool-02"
-#   size       = "s-4vcpu-8gb"
+#   name       = "autoscale-pool-01"
+#   size       = "s-1vcpu-2gb"
 #   auto_scale = true
 #   min_nodes  = 1
 #   max_nodes  = 2
 # }
+
+resource "digitalocean_kubernetes_node_pool" "autoscale-pool-02" {
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  cluster_id = digitalocean_kubernetes_cluster.fugue-state-cluster.id
+  name       = "autoscale-pool-02"
+  size       = "s-4vcpu-8gb"
+  auto_scale = true
+  min_nodes  = 1
+  max_nodes  = 1
+}
 
 # resource "digitalocean_kubernetes_node_pool" "autoscale-pool-03" {
 #   depends_on = [ digitalocean_kubernetes_cluster.fugue-state-cluster ]

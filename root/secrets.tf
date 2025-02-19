@@ -116,3 +116,14 @@ resource "kubernetes_secret" "fugue-state-repo" {
 
   type = "Opaque"
 }
+
+resource "kubernetes_secret" "velero-credentials" {
+  depends_on = [kubernetes_namespace.velero]
+  metadata {
+    name      = "velero-credentials"
+    namespace = "velero"
+  }
+  data = {
+    "snapshot-credentials" = var.velero_snapshot_credential
+  }
+}

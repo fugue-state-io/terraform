@@ -66,27 +66,6 @@ resource "kubernetes_namespace" "api" {
     name = "api"
   }
 }
-# resource "kubernetes_namespace" "argo-workflows" {
-#   depends_on = [ helm_release.nginx-ingress ]
-#   metadata {
-#     annotations = {
-#       name = "linkerd.io/inject"
-#       value = "enabled"
-#     }
-#     name = "argo-workflows"
-#   }
-# }
-
-# resource "kubernetes_namespace" "workflows" {
-#   depends_on = [ helm_release.nginx-ingress ]
-#   metadata {
-#     annotations = {
-#       name = "linkerd.io/inject"
-#       value = "enabled"
-#     }
-#     name = "workflows"
-#   }
-# }
 
 resource "kubernetes_namespace" "argocd" {
   depends_on = [helm_release.nginx-ingress]
@@ -120,23 +99,13 @@ resource "kubernetes_namespace" "ci" {
     name = "ci"
   }
 }
-# resource "kubernetes_namespace" "zudell-io" {
-#   depends_on = [ helm_release.nginx-ingress ]
-#   metadata {
-#     annotations = {
-#       name = "linkerd.io/inject"
-#       value = "enabled"
-#     }
-#     name = "zudell-io"
-#   }
-# }
-# resource "kubernetes_namespace" "gp-pong" {
-#   depends_on = [ helm_release.nginx-ingress ]
-#   metadata {
-#     annotations = {
-#       name = "linkerd.io/inject"
-#       value = "enabled"
-#     }
-#     name = "go-pong"
-#   }
-# }
+
+resource "kubernetes_namespace" "velero" {
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "velero"
+  }
+}

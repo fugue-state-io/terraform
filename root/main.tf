@@ -161,7 +161,14 @@ variable "velero_snapshot_credential" {
   type      = string
   sensitive = true
 }
-
+variable "velero_access_key_id" {
+  type      = string
+  sensitive = true
+}
+variable "velero_secret_key" {
+  type      = string
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

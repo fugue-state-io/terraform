@@ -124,6 +124,8 @@ resource "kubernetes_secret" "velero-credentials" {
     namespace = "velero"
   }
   data = {
-    "snapshot-credentials" = var.velero_snapshot_credential
+    "snapshot-credentials" = var.velero_snapshot_credential,
+    "bucket_access_id"     = var.do_cdn_spaces_access_id,
+    "bucket_secret_key"    = var.do_cdn_spaces_secret_key
   }
 }

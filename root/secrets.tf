@@ -55,8 +55,8 @@ resource "kubernetes_secret" "keycloak-secrets-env" {
     namespace = "keycloak"
   }
   data = {
-    "KEYCLOAK_ADMIN_USER"     = "keycloak"
-    "KEYCLOAK_ADMIN_PASSWORD" = var.keycloak_password
+    "KEYCLOAK_ADMIN_USER" = "keycloak"
+    "admin-password"      = var.keycloak_password
   }
 }
 resource "kubernetes_secret" "fugue-state-argocd-secret" {

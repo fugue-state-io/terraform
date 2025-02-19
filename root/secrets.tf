@@ -124,8 +124,19 @@ resource "kubernetes_secret" "velero-credentials" {
     namespace = "velero"
   }
   data = {
-    "snapshot-credentials" = var.velero_snapshot_credential,
+    "snapshot-credentials" = base64encode("[default]\naws_access_key_id=${var.do_cdn_spaces_access_id}\naws_secret_access_key=${var.do_cdn_spaces_secret_key}")
     "bucket_access_id"     = var.do_cdn_spaces_access_id,
     "bucket_secret_key"    = var.do_cdn_spaces_secret_key
+  }
+}
+
+resource "kubernetes_secret" "velero-digital-ocean-token" {
+  depends_on = [kubernetes_namespace.velero]
+  metadata {
+    name      = "velero-digital-ocean-token"
+    namespace = "velero"
+  }
+  data = {
+    "digitalocean_token" = var.velero_snapshot_credential
   }
 }

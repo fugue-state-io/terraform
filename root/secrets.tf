@@ -38,16 +38,18 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "FUGUE_STATE_BUCKET"       = var.fugue_state_bucket
   }
 }
-# resource "kubernetes_secret" "keycloak-secrets" {
-#   depends_on = [kubernetes_namespace.keycloak]
-#   metadata {
-#     name      = "keycloak-secrets"
-#     namespace = "keycloak"
-#   }
-#   data = {
-#     "password" = digitalocean_database_user.keycloak-db-user.password
-#   }
-# }
+resource "kubernetes_secret" "keycloak-postgresql" {
+  depends_on = [kubernetes_namespace.keycloak]
+  metadata {
+    name      = "keycloak-postgresql"
+    namespace = "keycloak"
+  }
+  data = {
+    "postgres-password"    = var.postgres_password,
+    "replication-password" = var.replication_password,
+    "password"             = var.keycloak_postgres_password
+  }
+}
 resource "kubernetes_secret" "keycloak-secrets-env" {
   depends_on = [kubernetes_namespace.keycloak]
   metadata {

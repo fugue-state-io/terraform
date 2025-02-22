@@ -169,6 +169,18 @@ variable "velero_secret_key" {
   type      = string
   sensitive = true
 }
+variable "postgres_password" {
+  type      = string
+  sensitive = true
+}
+variable "replication_password" {
+  type      = string
+  sensitive = true
+}
+variable "keycloak_postgres_password" {
+  type      = string
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

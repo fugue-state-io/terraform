@@ -38,10 +38,10 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "FUGUE_STATE_BUCKET"       = var.fugue_state_bucket
   }
 }
-resource "kubernetes_secret" "keycloak-postgresql" {
+resource "kubernetes_secret" "keycloak-postgresql-auth" {
   depends_on = [kubernetes_namespace.keycloak]
   metadata {
-    name      = "keycloak-postgresql"
+    name      = "keycloak-postgresql-auth"
     namespace = "keycloak"
   }
   data = {

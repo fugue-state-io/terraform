@@ -155,14 +155,14 @@ resource "kubernetes_config_map" "realm-secret" {
   }
 }
 
-resource "kubernetes_secret" "realm-json" {
+resource "kubernetes_secret" "realm-volume" {
   depends_on = [kubernetes_namespace.keycloak]
   metadata {
-    name      = "realm-json"
+    name      = "realm-volume"
     namespace = "keycloak"
   }
   data = {
-    "realm.json" = file("${path.cwd}/realm.json")
+    "realm.json" = file("${path.module}/realm.json")
   }
   type = "Opaque"
 }

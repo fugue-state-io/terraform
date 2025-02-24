@@ -154,15 +154,3 @@ resource "kubernetes_secret" "realm-secret" {
     "APP_EMAIL" : var.app_email
   }
 }
-
-resource "kubernetes_secret" "realm-volume" {
-  depends_on = [kubernetes_namespace.keycloak]
-  metadata {
-    name      = "realm-volume"
-    namespace = "keycloak"
-  }
-  data = {
-    "realm.json" = file("${path.module}/realm.json")
-  }
-  type = "Opaque"
-}

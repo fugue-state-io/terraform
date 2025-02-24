@@ -143,7 +143,7 @@ resource "kubernetes_secret" "velero-digital-ocean-token" {
   type = "Opaque"
 }
 
-resource "kubernetes_config_map" "realm-secret" {
+resource "kubernetes_secret" "realm-secret" {
   metadata {
     name      = "realm-secret"
     namespace = "keycloak"

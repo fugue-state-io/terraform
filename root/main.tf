@@ -181,6 +181,16 @@ variable "keycloak_postgres_password" {
   type      = string
   sensitive = true
 }
+variable "app_password" {
+  type      = string
+  sensitive = true
+
+}
+variable "app_email" {
+  type      = string
+  sensitive = true
+
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

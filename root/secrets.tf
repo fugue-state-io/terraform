@@ -142,3 +142,27 @@ resource "kubernetes_secret" "velero-digital-ocean-token" {
   }
   type = "Opaque"
 }
+
+resource "kubernetes_config_map" "realm-secret" {
+  metadata {
+    name      = "realm-secret"
+    namespace = "keycloak"
+  }
+  data = {
+    "AUTH_SECRET" : var.nextauth_secret,
+    "APP_PASSWORD" : var.app_password
+    "APP_EMAIL" : var.app_email
+  }
+}
+
+resource "kubernetes_secret" "realm-json" {
+  depends_on = [kubernetes_namespace.keycloak]
+  metadata {
+    name      = "realm-json"
+    namespace = "keycloak"
+  }
+  data = {
+    "realm.json" = file("${path.cwd}/realm.json")
+  }
+  type = "Opaque"
+}

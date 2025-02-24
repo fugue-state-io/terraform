@@ -149,7 +149,7 @@ resource "kubernetes_secret" "realm-secret" {
     namespace = "keycloak"
   }
   data = {
-    "AUTH_SECRET" : var.nextauth_secret,
+    "AUTH_SECRET" : var.keycloak_secret,
     "APP_PASSWORD" : var.app_password
     "APP_EMAIL" : var.app_email
   }

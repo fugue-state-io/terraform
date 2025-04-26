@@ -82,6 +82,28 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
   }
 }
 
+
+resource "kubernetes_secret" "fugue-state-repo" {
+  depends_on = [kubernetes_namespace.ci]
+  metadata {
+    name      = "fugue-state-repo"
+    namespace = "argocd"
+    labels = {
+      "argocd.argoproj.io/secret-type" = "repository"
+    }
+  }
+
+  data = {
+    "type"                    = "git"
+    "githubAppPrivateKey"     = trimspace(file("${path.cwd}/.sensitive/github_app.pem"))
+    "githubAppID"             = var.github_app_id
+    "githubAppInstallationID" = var.github_app_installation_id
+    "url"                     = var.github_repo_url
+  }
+
+  type = "Opaque"
+}
+
 resource "kubernetes_secret" "velero-credentials" {
   depends_on = [kubernetes_namespace.velero]
   metadata {
@@ -113,10 +135,11 @@ resource "kubernetes_secret" "realm-secret" {
   }
   data = {
     "AUTH_SECRET" : var.keycloak_secret,
-    "APP_PASSWORD" : var.app_password,
+    "APP_PASSWORD" : var.app_password
     "APP_EMAIL" : var.app_email
   }
 }
+
 
 resource "kubernetes_secret" "tf-backup" {
   metadata {

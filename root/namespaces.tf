@@ -62,7 +62,11 @@ resource "kubernetes_namespace" "tf-backup" {
     name = "tf-backup"
   }
 }
-
+resource "kubernetes_namespace" "ci" {
+  metadata {
+    name = "ci"
+  }
+}
 resource "kubernetes_namespace" "api" {
   depends_on = [helm_release.nginx-ingress]
   metadata {

@@ -113,7 +113,46 @@ resource "kubernetes_secret" "realm-secret" {
   }
   data = {
     "AUTH_SECRET" : var.keycloak_secret,
-    "APP_PASSWORD" : var.app_password
+    "APP_PASSWORD" : var.app_password,
     "APP_EMAIL" : var.app_email
+  }
+}
+
+resource "kubernetes_secret" "tf-backup" {
+  metadata {
+    name      = "tf-secrets"
+    namespace = "tf-backup"
+  }
+  data = {
+    "DIGITALOCEAN_TOKEN"                = var.do_token,
+    "TF_VAR_do_token"                   = var.do_token,
+    "TF_VAR_oauth_client_id"            = var.oauth_client_id,
+    "TF_VAR_argocd_webhook_secret"      = var.argocd_webhook_secret,
+    "TF_VAR_oauth_client_secret"        = var.oauth_client_secret,
+    "TF_VAR_do_spaces_access_id"        = var.do_spaces_access_id,
+    "TF_VAR_do_spaces_secret_key"       = var.do_spaces_secret_key,
+    "TF_VAR_do_cdn_spaces_access_id"    = var.do_cdn_spaces_access_id,
+    "TF_VAR_do_cdn_spaces_secret_key"   = var.do_cdn_spaces_secret_key,
+    "TF_VAR_github_app_id"              = var.github_app_id,
+    "TF_VAR_github_app_installation_id" = var.github_app_installation_id,
+    "TF_VAR_github_repo_url"            = var.github_repo_url,
+    "TF_VAR_github_app_client_id"       = var.github_app_client_id,
+    "TF_VAR_github_app_client_secret"   = var.github_app_client_secret,
+    "TF_VAR_github_webhook_secret"      = var.github_webhook_secret,
+    "TF_VAR_keycloak_password"          = var.keycloak_password,
+    "TF_VAR_nextauth_secret"            = var.nextauth_secret,
+    "TF_VAR_nextauth_url"               = var.nextauth_url,
+    "TF_VAR_keycloak_secret"            = var.keycloak_secret,
+    "TF_VAR_keycloak_issuer"            = var.keycloak_issuer,
+    "TF_VAR_keycloak_id"                = var.keycloak_id,
+    "TF_VAR_fugue_state_bucket"         = var.fugue_state_bucket,
+    "TF_VAR_velero_snapshot_credential" = var.velero_snapshot_credential,
+    "TF_VAR_velero_access_key_id"       = var.velero_access_key_id,
+    "TF_VAR_velero_secret_key"          = var.velero_secret_key,
+    "TF_VAR_postgres_password"          = var.postgres_password,
+    "TF_VAR_replication_password"       = var.replication_password,
+    "TF_VAR_keycloak_postgres_password" = var.keycloak_postgres_password,
+    "TF_VAR_app_password"               = var.app_password,
+    "TF_VAR_app_email"                  = var.app_email,
   }
 }

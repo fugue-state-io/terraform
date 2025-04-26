@@ -56,6 +56,18 @@ resource "kubernetes_namespace" "ui" {
   }
 }
 
+
+resource "kubernetes_namespace" "tf-backup" {
+  depends_on = [helm_release.nginx-ingress]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "tf-backup"
+  }
+}
+
 resource "kubernetes_namespace" "api" {
   depends_on = [helm_release.nginx-ingress]
   metadata {

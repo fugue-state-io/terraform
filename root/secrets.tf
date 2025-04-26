@@ -82,43 +82,6 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
   }
 }
 
-resource "kubernetes_secret" "github-auth" {
-  depends_on = [kubernetes_namespace.ci]
-  metadata {
-    name      = "github-auth"
-    namespace = "ci"
-  }
-
-  data = {
-    "github-app.pem"           = file("${path.cwd}/.sensitive/github_app.pem")
-    "github-app-client-id"     = var.github_app_client_id
-    "github-app-client-secret" = var.github_app_client_secret
-  }
-
-  type = "Opaque"
-}
-
-resource "kubernetes_secret" "fugue-state-repo" {
-  depends_on = [kubernetes_namespace.ci]
-  metadata {
-    name      = "fugue-state-repo"
-    namespace = "argocd"
-    labels = {
-      "argocd.argoproj.io/secret-type" = "repository"
-    }
-  }
-
-  data = {
-    "type"                    = "git"
-    "githubAppPrivateKey"     = trimspace(file("${path.cwd}/.sensitive/github_app.pem"))
-    "githubAppID"             = var.github_app_id
-    "githubAppInstallationID" = var.github_app_installation_id
-    "url"                     = var.github_repo_url
-  }
-
-  type = "Opaque"
-}
-
 resource "kubernetes_secret" "velero-credentials" {
   depends_on = [kubernetes_namespace.velero]
   metadata {

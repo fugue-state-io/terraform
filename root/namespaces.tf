@@ -58,12 +58,7 @@ resource "kubernetes_namespace" "ui" {
 
 
 resource "kubernetes_namespace" "tf-backup" {
-  depends_on = [helm_release.nginx-ingress]
   metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
     name = "tf-backup"
   }
 }
@@ -90,23 +85,14 @@ resource "kubernetes_namespace" "argocd" {
   }
 }
 
-resource "kubernetes_namespace" "argo-events" {
-  depends_on = [helm_release.nginx-ingress]
+resource "kubernetes_namespace" "velero" {
   metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "argo-events"
+    name = "velero"
   }
 }
 
-resource "kubernetes_namespace" "velero" {
+resource "kubernetes_namespace" "backups" {
   metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "velero"
+    name = "backups"
   }
 }

@@ -36,6 +36,7 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "DO_CDN_SPACES_ACCESS_ID"  = var.do_cdn_spaces_access_id
     "DO_CDN_SPACES_SECRET_KEY" = var.do_cdn_spaces_secret_key
     "FUGUE_STATE_BUCKET"       = var.fugue_state_bucket
+    "NEXT_PUBLIC_BASE_URL"     = var.ui_base_url
   }
 }
 resource "kubernetes_secret" "keycloak-postgresql-auth" {

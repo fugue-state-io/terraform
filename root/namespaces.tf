@@ -23,6 +23,17 @@ resource "kubernetes_namespace" "cert-manager" {
   }
 }
 
+resource "kubernetes_namespace" "fluent-bit" {
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "fluent-bit"
+  }
+}
+
 resource "kubernetes_namespace" "nginx-ingress" {
   depends_on = [helm_release.linkerd-control-plane]
   metadata {

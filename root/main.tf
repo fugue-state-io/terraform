@@ -160,7 +160,10 @@ variable "fugue_state_bucket" {
   type      = string
   sensitive = true
 }
-
+variable "ui_feature_project_select" {
+  type      = string
+  sensitive = true
+}
 variable "velero_snapshot_credential" {
   type      = string
   sensitive = true

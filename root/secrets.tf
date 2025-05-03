@@ -117,6 +117,19 @@ resource "kubernetes_secret" "velero-credentials" {
   type = "Opaque"
 }
 
+resource "kubernetes_secret" "fluentd-s3-credentials" {
+  depends_on = [kubernetes_namespace.fluentd]
+  metadata {
+    name      = "fluentd-s3-credentials"
+    namespace = "fluentd"
+  }
+  data = {
+    "AWS_ACCESS_KEY_ID"     = "${var.do_spaces_access_id}",
+    "AWS_SECRET_ACCESS_KEY" = "${var.do_spaces_secret_key}"
+  }
+  type = "Opaque"
+}
+
 resource "kubernetes_secret" "velero-digital-ocean-token" {
   depends_on = [kubernetes_namespace.velero]
   metadata {

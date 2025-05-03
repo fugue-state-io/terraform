@@ -38,6 +38,7 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "FUGUE_STATE_BUCKET"                    = var.fugue_state_bucket
     "NEXT_PUBLIC_BASE_URL"                  = var.ui_base_url
     "NEXT_PUBLIC_UI_FEATURE_PROJECT_SELECT" = var.ui_feature_project_select
+    "NEXT_TELEMETRY_DISABLED"               = 1
   }
 }
 resource "kubernetes_secret" "keycloak-postgresql-auth" {

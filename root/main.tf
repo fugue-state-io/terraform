@@ -196,7 +196,18 @@ variable "app_email" {
   type      = string
   sensitive = true
 }
-
+variable "redis_password" {
+  type      = string
+  sensitive = true
+}
+variable "redis_host" {
+  type      = string
+  sensitive = true
+}
+variable "redis_port" {
+  type      = string
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

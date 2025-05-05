@@ -20,6 +20,17 @@ resource "kubernetes_secret" "api-secrets" {
   }
 }
 
+resource "kubernetes_secret" "redis-auth" {
+  depends_on = [kubernetes_namespace.api]
+  metadata {
+    name      = "redis-auth"
+    namespace = "redis"
+  }
+  data = {
+    "redis-password" = var.redis_password
+  }
+}
+
 resource "kubernetes_secret" "fugue-state-ui-secrets" {
   depends_on = [kubernetes_namespace.ui]
   metadata {
@@ -39,6 +50,10 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "NEXT_PUBLIC_BASE_URL"                  = var.ui_base_url
     "NEXT_PUBLIC_UI_FEATURE_PROJECT_SELECT" = var.ui_feature_project_select
     "NEXT_TELEMETRY_DISABLED"               = 1
+    "NODE_ENV"                              = "production"
+    "REDIS_PASSWORD"                        = var.redis_password
+    "REDIS_HOST"                            = var.redis_host
+    "REDIS_PORT"                            = var.redis_port
   }
 }
 resource "kubernetes_secret" "keycloak-postgresql-auth" {
@@ -193,5 +208,10 @@ resource "kubernetes_secret" "tf-backup" {
     "TF_VAR_keycloak_postgres_password" = var.keycloak_postgres_password,
     "TF_VAR_app_password"               = var.app_password,
     "TF_VAR_app_email"                  = var.app_email,
+    "TF_VAR_redis_password"             = var.redis_password,
+    "TF_VAR_redis_host"                 = var.redis_host,
+    "TF_VAR_redis_port"                 = var.redis_port,
+    "TF_VAR_ui_base_url"                = var.ui_base_url,
+    "TF_VAR_ui_feature_project_select"  = var.ui_feature_project_select
   }
 }

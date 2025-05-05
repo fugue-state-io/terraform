@@ -43,6 +43,16 @@ resource "kubernetes_namespace" "loki" {
     name = "loki"
   }
 }
+resource "kubernetes_namespace" "redis" {
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "redis"
+  }
+}
 resource "kubernetes_namespace" "nginx-ingress" {
   depends_on = [helm_release.linkerd-control-plane]
   metadata {

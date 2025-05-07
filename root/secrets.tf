@@ -39,7 +39,7 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
   }
   data = {
     "AUTH_SECRET"                           = var.nextauth_secret
-    "AUTH_URL"                              = var.nextauth_url
+    "AUTH_URL"                              = var.ui_auth_url
     "AUTH_URL_INTERNAL"                     = var.nextauth_url
     "AUTH_KEYCLOAK_ID"                      = var.keycloak_id
     "AUTH_KEYCLOAK_SECRET"                  = var.keycloak_secret

@@ -83,7 +83,10 @@ variable "ui_base_url" {
   type      = string
   sensitive = true
 }
-
+variable "ui_auth_url" {
+  type      = string
+  sensitive = true
+}
 variable "argocd_webhook_secret" {
   type      = string
   sensitive = true

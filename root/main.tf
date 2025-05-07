@@ -111,6 +111,14 @@ variable "do_cdn_spaces_secret_key" {
   type      = string
   sensitive = true
 }
+variable "fugue_state_cdn_access_key" {
+  type      = string
+  sensitive = true
+}
+variable "fugue_state_cdn_secret_key" {
+  type      = string
+  sensitive = true
+}
 variable "github_app_id" {
   type      = string
   sensitive = true

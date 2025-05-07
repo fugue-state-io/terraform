@@ -44,8 +44,8 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "AUTH_KEYCLOAK_ID"                      = var.keycloak_id
     "AUTH_KEYCLOAK_SECRET"                  = var.keycloak_secret
     "AUTH_KEYCLOAK_ISSUER"                  = var.keycloak_issuer
-    "DO_CDN_SPACES_ACCESS_ID"               = var.do_cdn_spaces_access_id
-    "DO_CDN_SPACES_SECRET_KEY"              = var.do_cdn_spaces_secret_key
+    "FUGUE_STATE_CDN_ACCESS_ID"             = var.fugue_state_cdn_access_key
+    "FUGUE_STATE_CDN_SECRET_KEY"            = var.fugue_state_cdn_secret_key
     "FUGUE_STATE_BUCKET"                    = var.fugue_state_bucket
     "NEXT_PUBLIC_BASE_URL"                  = var.ui_base_url
     "NEXT_PUBLIC_UI_FEATURE_PROJECT_SELECT" = var.ui_feature_project_select

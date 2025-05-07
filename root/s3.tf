@@ -7,7 +7,13 @@ resource "digitalocean_spaces_bucket" "fugue-state-cdn" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET", "POST", "PUT", "DELETE"]
-    allowed_origins = ["http://localhost:3000", "https://fugue-state.io"]
+    allowed_origins = ["http://localhost:3000", ]
+    max_age_seconds = 30000
+  }
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "POST", "PUT", "DELETE"]
+    allowed_origins = ["https://fugue-state.io"]
     max_age_seconds = 30000
   }
   region = "nyc3"

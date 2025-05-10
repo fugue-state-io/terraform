@@ -41,6 +41,10 @@ resource "digitalocean_database_firewall" "postgres-fw" {
     type  = "k8s"
     value = digitalocean_kubernetes_cluster.fugue-state-cluster.id
   }
+  rule {
+    type  = "ip_addr"
+    value = "0.0.0.0/0"
+  }
 }
 
 # Database Clusters

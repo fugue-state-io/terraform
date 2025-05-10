@@ -158,30 +158,6 @@ resource "kubernetes_secret" "argo-postgres-config" {
     "host"     = digitalocean_database_cluster.postgres.private_uri
   }
 }
-resource "kubernetes_secret" "argo-postgres-host" {
-  depends_on = [kubernetes_namespace.argo-workflows]
-  metadata {
-    name      = "argo-postgres-host"
-    namespace = "argo-workflows"
-    labels = {
-      "app.kubernetes.io/part-of"    = "argo-workflows"
-      "app.kubernetes.io/managed-by" = "Helm"
-    }
-    annotations = {
-      "meta.helm.sh/release-namespace" = "argo-workflows"
-      "meta.helm.sh/release-name"      = "argo-workflows"
-    }
-  }
-  data = {
-    "values.yaml" = <<EOT
-persistence:
-  enabled: true
-  archive: true
-  postgresql:
-    host: ${digitalocean_database_cluster.postgres.private_uri}
-EOT
-  }
-}
 resource "kubernetes_secret" "argo-workflows-sso-argocd" {
   depends_on = [kubernetes_namespace.argocd]
   metadata {
@@ -221,25 +197,6 @@ resource "kubernetes_secret" "argo-workflows-spaces" {
     "spaces_secret_key" = var.do_spaces_secret_key
   }
 }
-# resource "kubernetes_secret" "argo-postgres-config" {
-#   depends_on = [ kubernetes_namespace.argo-workflows ]
-#   metadata {
-#     name = "argo-postgres-config"
-#     namespace = "argo-workflows"
-#     labels = {
-#       "app.kubernetes.io/part-of" = "argo-workflows"
-#       "app.kubernetes.io/managed-by" = "Helm"
-#     }
-#     annotations = {
-#       "meta.helm.sh/release-namespace" = "argo-workflows"
-#       "meta.helm.sh/release-name" = "argo-workflows"
-#     }
-#   }
-#   data = {
-#     "user" = digitalocean_database_user.argo-db-user.name
-#     "password" = digitalocean_database_user.argo-db-user.password
-#   }
-# }
 
 resource "kubernetes_secret" "fugue-state-repo" {
   depends_on = [kubernetes_namespace.ci]

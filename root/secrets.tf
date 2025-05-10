@@ -99,6 +99,26 @@ resource "kubernetes_secret" "fugue-state-argocd-secret" {
     "webhook.github.secret" = var.argocd_webhook_secret
   }
 }
+resource "kubernetes_secret" "s3-access-secret" {
+  depends_on = [kubernetes_namespace.argocd]
+  metadata {
+    name      = "s3-access-secret"
+    namespace = "argo-events"
+    labels = {
+      "app.kubernetes.io/part-of"    = "argo-events"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argo-events"
+      "meta.helm.sh/release-name"      = "argo-events"
+    }
+  }
+  data = {
+    "accessKey" = var.fugue_state_cdn_access_key
+    "secretKey" = var.fugue_state_cdn_secret_key
+  }
+}
+
 
 
 resource "kubernetes_secret" "fugue-state-repo" {

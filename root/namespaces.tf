@@ -118,7 +118,26 @@ resource "kubernetes_namespace" "argocd" {
     name = "argocd"
   }
 }
-
+resource "kubernetes_namespace" "argo-events" {
+  depends_on = [helm_release.nginx-ingress]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "argo-events"
+  }
+}
+resource "kubernetes_namespace" "arog-workflows" {
+  depends_on = [helm_release.nginx-ingress]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "argo-workflows"
+  }
+}
 resource "kubernetes_namespace" "velero" {
   metadata {
     name = "velero"

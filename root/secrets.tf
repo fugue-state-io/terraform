@@ -155,6 +155,7 @@ resource "kubernetes_secret" "argo-postgres-config" {
   data = {
     "username" = digitalocean_database_user.argo-db-user.name
     "password" = digitalocean_database_user.argo-db-user.password
+    "host"     = digitalocean_database_cluster.postgres.private_uri
   }
 }
 resource "kubernetes_secret" "argo-workflows-sso-argocd" {

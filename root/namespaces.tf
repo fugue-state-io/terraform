@@ -102,6 +102,11 @@ resource "kubernetes_namespace" "etl" {
     name = "etl"
   }
 }
+resource "kubernetes_namespace" "loki-stack" {
+  metadata {
+    name = "loki-stack"
+  }
+}
 resource "kubernetes_namespace" "api" {
   depends_on = [helm_release.nginx-ingress]
   metadata {

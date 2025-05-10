@@ -119,7 +119,64 @@ resource "kubernetes_secret" "s3-access-secret" {
   }
 }
 
+resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
+  depends_on = [kubernetes_namespace.argo-workflows]
+  metadata {
+    name      = "argo-workflows-sso"
+    namespace = "argo-workflows"
+    labels = {
+      "app.kubernetes.io/part-of"    = "argo-workflows"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argo-workflows"
+      "meta.helm.sh/release-name"      = "argo-workflows"
+    }
+  }
+  data = {
+    "client-secret" = var.argo_workflows_client_secret
+    "client-id"     = var.argo_workflows_client_id
+  }
+}
 
+resource "kubernetes_secret" "argo-workflows-spaces" {
+  depends_on = [kubernetes_namespace.argo-workflows]
+  metadata {
+    name      = "argo-workflows-spaces"
+    namespace = "argo-workflows"
+    labels = {
+      "app.kubernetes.io/part-of"    = "argo-workflows"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "argo-workflows"
+      "meta.helm.sh/release-name"      = "argo-workflows"
+    }
+  }
+  data = {
+    "spaces_access_id"  = var.do_spaces_access_id
+    "spaces_secret_key" = var.do_spaces_secret_key
+  }
+}
+# resource "kubernetes_secret" "argo-postgres-config" {
+#   depends_on = [ kubernetes_namespace.argo-workflows ]
+#   metadata {
+#     name = "argo-postgres-config"
+#     namespace = "argo-workflows"
+#     labels = {
+#       "app.kubernetes.io/part-of" = "argo-workflows"
+#       "app.kubernetes.io/managed-by" = "Helm"
+#     }
+#     annotations = {
+#       "meta.helm.sh/release-namespace" = "argo-workflows"
+#       "meta.helm.sh/release-name" = "argo-workflows"
+#     }
+#   }
+#   data = {
+#     "user" = digitalocean_database_user.argo-db-user.name
+#     "password" = digitalocean_database_user.argo-db-user.password
+#   }
+# }
 
 resource "kubernetes_secret" "fugue-state-repo" {
   depends_on = [kubernetes_namespace.ci]

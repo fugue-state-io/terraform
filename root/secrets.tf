@@ -153,7 +153,7 @@ resource "kubernetes_secret" "argo-postgres-config" {
     }
   }
   data = {
-    "user"     = digitalocean_database_user.argo-db-user.name
+    "username" = digitalocean_database_user.argo-db-user.name
     "password" = digitalocean_database_user.argo-db-user.password
   }
 }

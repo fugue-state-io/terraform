@@ -97,6 +97,11 @@ resource "kubernetes_namespace" "ci" {
     name = "ci"
   }
 }
+resource "kubernetes_namespace" "etl" {
+  metadata {
+    name = "etl"
+  }
+}
 resource "kubernetes_namespace" "api" {
   depends_on = [helm_release.nginx-ingress]
   metadata {

@@ -118,6 +118,24 @@ resource "kubernetes_secret" "s3-access-secret" {
     "secretKey" = var.fugue_state_cdn_secret_key
   }
 }
+resource "kubernetes_secret" "grafana_admin_password" {
+  depends_on = [kubernetes_namespace.loki-stack]
+  metadata {
+    name      = "grafana-admin-password"
+    namespace = "argo-events"
+    labels = {
+      "app.kubernetes.io/part-of"    = "loki-stack"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "loki-stack"
+      "meta.helm.sh/release-name"      = "loki-stack"
+    }
+  }
+  data = {
+    "admin-password" = var.grafana_admin_password
+  }
+}
 
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   depends_on = [kubernetes_namespace.argo-workflows]

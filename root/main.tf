@@ -228,6 +228,10 @@ variable "argo_workflows_client_secret" {
   type      = string
   sensitive = true
 }
+variable "grafana_admin_password" {
+  type      = string
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

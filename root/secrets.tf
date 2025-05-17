@@ -118,6 +118,25 @@ resource "kubernetes_secret" "s3-access-secret" {
     "secretKey" = var.fugue_state_cdn_secret_key
   }
 }
+resource "kubernetes_secret" "s3-access-secret" {
+  depends_on = [kubernetes_namespace.processing]
+  metadata {
+    name      = "s3-access-secret"
+    namespace = "procesing"
+    labels = {
+      "app.kubernetes.io/part-of"    = "procesing"
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
+    annotations = {
+      "meta.helm.sh/release-namespace" = "procesing"
+      "meta.helm.sh/release-name"      = "procesing"
+    }
+  }
+  data = {
+    "accessKey" = var.fugue_state_cdn_access_key
+    "secretKey" = var.fugue_state_cdn_secret_key
+  }
+}
 resource "kubernetes_secret" "grafana_admin_password" {
   depends_on = [kubernetes_namespace.loki-stack]
   metadata {

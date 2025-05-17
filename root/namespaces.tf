@@ -95,6 +95,12 @@ resource "kubernetes_namespace" "tf-backup" {
 resource "kubernetes_namespace" "ci" {
   metadata {
     name = "ci"
+
+  }
+}
+resource "kubernetes_namespace" "processing" {
+  metadata {
+    name = "processing"
   }
 }
 resource "kubernetes_namespace" "etl" {
@@ -146,16 +152,6 @@ resource "kubernetes_namespace" "argo-workflows" {
       value = "enabled"
     }
     name = "argo-workflows"
-  }
-}
-resource "kubernetes_namespace" "processing" {
-  depends_on = [helm_release.nginx-ingress]
-  metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "processing"
   }
 }
 resource "kubernetes_namespace" "velero" {

@@ -118,18 +118,18 @@ resource "kubernetes_secret" "s3-access-secret" {
     "secretKey" = var.fugue_state_cdn_secret_key
   }
 }
-resource "kubernetes_secret" "s3-access-secret" {
+resource "kubernetes_secret" "processing-s3-access-secret" {
   depends_on = [kubernetes_namespace.processing]
   metadata {
     name      = "s3-access-secret"
-    namespace = "procesing"
+    namespace = "processing"
     labels = {
-      "app.kubernetes.io/part-of"    = "procesing"
+      "app.kubernetes.io/part-of"    = "processing"
       "app.kubernetes.io/managed-by" = "Helm"
     }
     annotations = {
-      "meta.helm.sh/release-namespace" = "procesing"
-      "meta.helm.sh/release-name"      = "procesing"
+      "meta.helm.sh/release-namespace" = "processing"
+      "meta.helm.sh/release-name"      = "processing"
     }
   }
   data = {

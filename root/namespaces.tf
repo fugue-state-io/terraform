@@ -23,6 +23,18 @@ resource "kubernetes_namespace" "cert-manager" {
   }
 }
 
+resource "kubernetes_namespace" "postfix" {
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "postfix"
+  }
+}
+
+
 resource "kubernetes_namespace" "fluentd" {
   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
   metadata {

@@ -30,6 +30,18 @@ resource "kubernetes_secret" "redis-auth" {
     "redis-password" = var.redis_password
   }
 }
+resource "kubernetes_secret" "postfix-secrets" {
+  depends_on = [kubernetes_namespace.postfix]
+  metadata {
+    name      = "postfix-secrets"
+    namespace = "postfix"
+  }
+  data = {
+    "smtp-server" = var.smtp_server
+    "smtp-user"   = var.smtp_user
+    "smtp-pass"   = var.smtp_pass
+  }
+}
 
 resource "kubernetes_secret" "fugue-state-ui-secrets" {
   depends_on = [kubernetes_namespace.ui]

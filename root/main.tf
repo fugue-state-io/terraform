@@ -232,6 +232,18 @@ variable "grafana_admin_password" {
   type      = string
   sensitive = true
 }
+variable "smtp_password" {
+  type      = string
+  sensitive = true
+}
+variable "smtp_user" {
+  type      = string
+  sensitive = true
+}
+variable "smtp_server" {
+  type      = string
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

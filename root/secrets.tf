@@ -37,9 +37,9 @@ resource "kubernetes_secret" "postfix-secrets" {
     namespace = "postfix"
   }
   data = {
-    "smtp-server" = var.smtp_server
-    "smtp-user"   = var.smtp_user
-    "smtp-pass"   = var.smtp_pass
+    "smtp-server"   = var.smtp_server
+    "smtp-user"     = var.smtp_user
+    "smtp-password" = var.smtp_password
   }
 }
 

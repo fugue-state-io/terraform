@@ -190,7 +190,6 @@ resource "kubernetes_secret" "argo-workflows-spaces" {
 }
 
 resource "kubernetes_secret" "fugue-state-repo" {
-  depends_on = [kubernetes_namespace.ci]
   metadata {
     name      = "fugue-state-repo"
     namespace = "argocd"

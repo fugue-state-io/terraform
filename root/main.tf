@@ -143,30 +143,6 @@ variable "github_webhook_secret" {
   type      = string
   sensitive = true
 }
-variable "keycloak_password" {
-  type      = string
-  sensitive = true
-}
-variable "nextauth_secret" {
-  type      = string
-  sensitive = true
-}
-variable "nextauth_url" {
-  type      = string
-  sensitive = true
-}
-variable "keycloak_secret" {
-  type      = string
-  sensitive = true
-}
-variable "keycloak_issuer" {
-  type      = string
-  sensitive = true
-}
-variable "keycloak_id" {
-  type      = string
-  sensitive = true
-}
 variable "fugue_state_bucket" {
   type      = string
   sensitive = true
@@ -175,27 +151,7 @@ variable "ui_feature_project_select" {
   type      = string
   sensitive = true
 }
-variable "velero_snapshot_credential" {
-  type      = string
-  sensitive = true
-}
-variable "velero_access_key_id" {
-  type      = string
-  sensitive = true
-}
-variable "velero_secret_key" {
-  type      = string
-  sensitive = true
-}
-variable "postgres_password" {
-  type      = string
-  sensitive = true
-}
 variable "replication_password" {
-  type      = string
-  sensitive = true
-}
-variable "keycloak_postgres_password" {
   type      = string
   sensitive = true
 }
@@ -225,10 +181,6 @@ variable "argo_workflows_client_id" {
 }
 
 variable "argo_workflows_client_secret" {
-  type      = string
-  sensitive = true
-}
-variable "grafana_admin_password" {
   type      = string
   sensitive = true
 }

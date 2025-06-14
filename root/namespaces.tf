@@ -22,39 +22,6 @@ resource "kubernetes_namespace" "cert-manager" {
     name = "cert-manager"
   }
 }
-
-resource "kubernetes_namespace" "postfix" {
-  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
-  metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "postfix"
-  }
-}
-
-
-resource "kubernetes_namespace" "fluentd" {
-  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
-  metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "fluentd"
-  }
-}
-resource "kubernetes_namespace" "loki" {
-  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
-  metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "loki"
-  }
-}
 resource "kubernetes_namespace" "redis" {
   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
   metadata {
@@ -76,17 +43,6 @@ resource "kubernetes_namespace" "nginx-ingress" {
   }
 }
 
-resource "kubernetes_namespace" "keycloak" {
-  depends_on = [helm_release.nginx-ingress]
-  metadata {
-    annotations = {
-      name  = "linkerd.io/inject"
-      value = "enabled"
-    }
-    name = "keycloak"
-  }
-}
-
 resource "kubernetes_namespace" "ui" {
   depends_on = [helm_release.nginx-ingress]
   metadata {
@@ -102,27 +58,6 @@ resource "kubernetes_namespace" "ui" {
 resource "kubernetes_namespace" "tf-backup" {
   metadata {
     name = "tf-backup"
-  }
-}
-resource "kubernetes_namespace" "ci" {
-  metadata {
-    name = "ci"
-
-  }
-}
-resource "kubernetes_namespace" "processing" {
-  metadata {
-    name = "processing"
-  }
-}
-resource "kubernetes_namespace" "etl" {
-  metadata {
-    name = "etl"
-  }
-}
-resource "kubernetes_namespace" "loki-stack" {
-  metadata {
-    name = "loki-stack"
   }
 }
 resource "kubernetes_namespace" "api" {
@@ -164,16 +99,5 @@ resource "kubernetes_namespace" "argo-workflows" {
       value = "enabled"
     }
     name = "argo-workflows"
-  }
-}
-resource "kubernetes_namespace" "velero" {
-  metadata {
-    name = "velero"
-  }
-}
-
-resource "kubernetes_namespace" "backups" {
-  metadata {
-    name = "backups"
   }
 }

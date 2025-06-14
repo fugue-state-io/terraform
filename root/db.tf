@@ -9,22 +9,22 @@ resource "digitalocean_database_cluster" "postgres" {
   private_network_uuid = digitalocean_vpc.fugue-state-vpc.id
 }
 
-resource "digitalocean_database_db" "postgres-db" {
+resource "digitalocean_database_db" "fugue-state-db" {
   depends_on = [digitalocean_database_cluster.postgres]
   cluster_id = digitalocean_database_cluster.postgres.id
   name       = "fugue-state-db"
 }
-resource "digitalocean_database_db" "fuge-state-db" {
-  depends_on = [digitalocean_database_cluster.postgres]
-  cluster_id = digitalocean_database_cluster.postgres.id
-  name       = "fugue-state-db"
-}
+
 resource "digitalocean_database_user" "fugue-state-user" {
   depends_on = [digitalocean_database_cluster.postgres]
   cluster_id = digitalocean_database_cluster.postgres.id
   name       = "fugue-state-user"
 }
-
+resource "digitalocean_database_db" "postgres-db" {
+  depends_on = [digitalocean_database_cluster.postgres]
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "fugue-state-db"
+}
 resource "digitalocean_database_user" "argo-db-user" {
   depends_on = [digitalocean_database_cluster.postgres]
   cluster_id = digitalocean_database_cluster.postgres.id

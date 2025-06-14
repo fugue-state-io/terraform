@@ -30,19 +30,6 @@ resource "kubernetes_secret" "redis-auth" {
     "redis-password" = var.redis_password
   }
 }
-resource "kubernetes_secret" "postfix-secrets" {
-  depends_on = [kubernetes_namespace.postfix]
-  metadata {
-    name      = "postfix-secrets"
-    namespace = "postfix"
-  }
-  data = {
-    "smtp-server"   = var.smtp_server
-    "smtp-user"     = var.smtp_user
-    "smtp-password" = var.smtp_password
-  }
-}
-
 resource "kubernetes_secret" "fugue-state-ui-secrets" {
   depends_on = [kubernetes_namespace.ui]
   metadata {
@@ -50,12 +37,8 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     namespace = "ui"
   }
   data = {
-    "AUTH_SECRET"                           = var.nextauth_secret
     "AUTH_URL"                              = var.ui_auth_url
     "AUTH_URL_INTERNAL"                     = var.ui_auth_url
-    "AUTH_KEYCLOAK_ID"                      = var.keycloak_id
-    "AUTH_KEYCLOAK_SECRET"                  = var.keycloak_secret
-    "AUTH_KEYCLOAK_ISSUER"                  = var.keycloak_issuer
     "FUGUE_STATE_CDN_ACCESS_ID"             = var.fugue_state_cdn_access_key
     "FUGUE_STATE_CDN_SECRET_KEY"            = var.fugue_state_cdn_secret_key
     "FUGUE_STATE_BUCKET"                    = var.fugue_state_bucket
@@ -67,30 +50,6 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "REDIS_HOST"                            = var.redis_host
     "REDIS_PORT"                            = var.redis_port
     "DATABASE_URL"                          = "postgresql://${digitalocean_database_user.fugue-state-user.name}:${digitalocean_database_user.fugue-state-user.password}@${digitalocean_database_cluster.postgres.host}:${digitalocean_database_cluster.postgres.port}/${digitalocean_database_db.fugue-state-db.name}?schema=fugue-state"
-  }
-}
-
-resource "kubernetes_secret" "keycloak-postgresql-auth" {
-  depends_on = [kubernetes_namespace.keycloak]
-  metadata {
-    name      = "keycloak-postgresql-auth"
-    namespace = "keycloak"
-  }
-  data = {
-    "postgres-password"    = var.postgres_password,
-    "replication-password" = var.replication_password,
-    "password"             = var.keycloak_postgres_password
-  }
-}
-resource "kubernetes_secret" "keycloak-secrets-env" {
-  depends_on = [kubernetes_namespace.keycloak]
-  metadata {
-    name      = "keycloak-secrets-env"
-    namespace = "keycloak"
-  }
-  data = {
-    "KEYCLOAK_ADMIN_USER" = "keycloak"
-    "admin-password"      = var.keycloak_password
   }
 }
 resource "kubernetes_secret" "fugue-state-argocd-secret" {
@@ -132,44 +91,25 @@ resource "kubernetes_secret" "s3-access-secret" {
     "secretKey" = var.fugue_state_cdn_secret_key
   }
 }
-resource "kubernetes_secret" "processing-s3-access-secret" {
-  depends_on = [kubernetes_namespace.processing]
-  metadata {
-    name      = "s3-access-secret"
-    namespace = "processing"
-    labels = {
-      "app.kubernetes.io/part-of"    = "processing"
-      "app.kubernetes.io/managed-by" = "Helm"
-    }
-    annotations = {
-      "meta.helm.sh/release-namespace" = "processing"
-      "meta.helm.sh/release-name"      = "processing"
-    }
-  }
-  data = {
-    "accessKey" = var.fugue_state_cdn_access_key
-    "secretKey" = var.fugue_state_cdn_secret_key
-  }
-}
-resource "kubernetes_secret" "grafana_admin_password" {
-  depends_on = [kubernetes_namespace.loki-stack]
-  metadata {
-    name      = "grafana-admin-password"
-    namespace = "argo-events"
-    labels = {
-      "app.kubernetes.io/part-of"    = "loki-stack"
-      "app.kubernetes.io/managed-by" = "Helm"
-    }
-    annotations = {
-      "meta.helm.sh/release-namespace" = "loki-stack"
-      "meta.helm.sh/release-name"      = "loki-stack"
-    }
-  }
-  data = {
-    "admin-password" = var.grafana_admin_password
-  }
-}
-
+# resource "kubernetes_secret" "processing-s3-access-secret" {
+#   depends_on = [kubernetes_namespace.processing]
+#   metadata {
+#     name      = "s3-access-secret"
+#     namespace = "processing"
+#     labels = {
+#       "app.kubernetes.io/part-of"    = "processing"
+#       "app.kubernetes.io/managed-by" = "Helm"
+#     }
+#     annotations = {
+#       "meta.helm.sh/release-namespace" = "processing"
+#       "meta.helm.sh/release-name"      = "processing"
+#     }
+#   }
+#   data = {
+#     "accessKey" = var.fugue_state_cdn_access_key
+#     "secretKey" = var.fugue_state_cdn_secret_key
+#   }
+# }
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   depends_on = [kubernetes_namespace.argo-workflows]
   metadata {
@@ -269,57 +209,6 @@ resource "kubernetes_secret" "fugue-state-repo" {
 
   type = "Opaque"
 }
-
-resource "kubernetes_secret" "velero-credentials" {
-  depends_on = [kubernetes_namespace.velero]
-  metadata {
-    name      = "velero-credentials"
-    namespace = "velero"
-  }
-  data = {
-    "snapshot-credentials" = "[default]\naws_access_key_id=${var.velero_access_key_id}\naws_secret_access_key=${var.velero_secret_key}"
-  }
-  type = "Opaque"
-}
-
-resource "kubernetes_secret" "fluentd-s3-credentials" {
-  depends_on = [kubernetes_namespace.fluentd]
-  metadata {
-    name      = "fluentd-s3-credentials"
-    namespace = "fluentd"
-  }
-  data = {
-    "AWS_ACCESS_KEY_ID"     = "${var.do_spaces_access_id}",
-    "AWS_SECRET_ACCESS_KEY" = "${var.do_spaces_secret_key}"
-  }
-  type = "Opaque"
-}
-
-resource "kubernetes_secret" "velero-digital-ocean-token" {
-  depends_on = [kubernetes_namespace.velero]
-  metadata {
-    name      = "velero-digital-ocean-token"
-    namespace = "velero"
-  }
-  data = {
-    "digitalocean_token" = var.velero_snapshot_credential
-  }
-  type = "Opaque"
-}
-
-resource "kubernetes_secret" "realm-secret" {
-  metadata {
-    name      = "realm-secret"
-    namespace = "keycloak"
-  }
-  data = {
-    "AUTH_SECRET" : var.keycloak_secret,
-    "APP_PASSWORD" : var.app_password
-    "APP_EMAIL" : var.app_email
-  }
-}
-
-
 resource "kubernetes_secret" "tf-backup" {
   metadata {
     name      = "tf-secrets"
@@ -343,19 +232,8 @@ resource "kubernetes_secret" "tf-backup" {
     "TF_VAR_github_app_client_id"         = var.github_app_client_id,
     "TF_VAR_github_app_client_secret"     = var.github_app_client_secret,
     "TF_VAR_github_webhook_secret"        = var.github_webhook_secret,
-    "TF_VAR_keycloak_password"            = var.keycloak_password,
-    "TF_VAR_nextauth_secret"              = var.nextauth_secret,
-    "TF_VAR_nextauth_url"                 = var.nextauth_url,
-    "TF_VAR_keycloak_secret"              = var.keycloak_secret,
-    "TF_VAR_keycloak_issuer"              = var.keycloak_issuer,
-    "TF_VAR_keycloak_id"                  = var.keycloak_id,
     "TF_VAR_fugue_state_bucket"           = var.fugue_state_bucket,
-    "TF_VAR_velero_snapshot_credential"   = var.velero_snapshot_credential,
-    "TF_VAR_velero_access_key_id"         = var.velero_access_key_id,
-    "TF_VAR_velero_secret_key"            = var.velero_secret_key,
-    "TF_VAR_postgres_password"            = var.postgres_password,
     "TF_VAR_replication_password"         = var.replication_password,
-    "TF_VAR_keycloak_postgres_password"   = var.keycloak_postgres_password,
     "TF_VAR_app_password"                 = var.app_password,
     "TF_VAR_app_email"                    = var.app_email,
     "TF_VAR_redis_password"               = var.redis_password,
@@ -366,7 +244,6 @@ resource "kubernetes_secret" "tf-backup" {
     "TF_VAR_ui_auth_url"                  = var.ui_auth_url,
     "TF_VAR_fugue_state_cdn_access_key"   = var.fugue_state_cdn_access_key,
     "TF_VAR_fugue_state_cdn_secret_key"   = var.fugue_state_cdn_secret_key,
-    "TF_VAR_grafana_admin_password"       = var.grafana_admin_password,
     "TF_VAR_argo_workflows_client_id"     = var.argo_workflows_client_id,
     "TF_VAR_argo_workflows_client_secret" = var.argo_workflows_client_secret
   }

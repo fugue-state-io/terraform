@@ -66,8 +66,10 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "REDIS_PASSWORD"                        = var.redis_password
     "REDIS_HOST"                            = var.redis_host
     "REDIS_PORT"                            = var.redis_port
+    "DATABASE_URL"                          = "postgresql://${digitalocean_database_user.fugue-state-user.name}:${digitalocean_database_user.fugue-state-user.password}@${digitalocean_database_cluster.postgres.host}:${digitalocean_database_cluster.postgres.port}/${digitalocean_database_db.fugue-state-db.name}?schema=fugue-state"
   }
 }
+
 resource "kubernetes_secret" "keycloak-postgresql-auth" {
   depends_on = [kubernetes_namespace.keycloak]
   metadata {

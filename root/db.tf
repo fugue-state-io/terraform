@@ -12,7 +12,17 @@ resource "digitalocean_database_cluster" "postgres" {
 resource "digitalocean_database_db" "postgres-db" {
   depends_on = [digitalocean_database_cluster.postgres]
   cluster_id = digitalocean_database_cluster.postgres.id
-  name       = "postgres"
+  name       = "fugue-state-db"
+}
+resource "digitalocean_database_db" "fuge-state-db" {
+  depends_on = [digitalocean_database_cluster.postgres]
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "fugue-state-db"
+}
+resource "digitalocean_database_user" "fugue-state-user" {
+  depends_on = [digitalocean_database_cluster.postgres]
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "fugue-state-user"
 }
 
 resource "digitalocean_database_user" "argo-db-user" {

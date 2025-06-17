@@ -22,6 +22,10 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.7.0"
     }
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = "1.14.0"
+    }
   }
   backend "s3" {
     # Deactivate a few AWS-specific checks
@@ -148,10 +152,6 @@ variable "fugue_state_bucket" {
   sensitive = true
 }
 variable "ui_feature_project_select" {
-  type      = string
-  sensitive = true
-}
-variable "replication_password" {
   type      = string
   sensitive = true
 }

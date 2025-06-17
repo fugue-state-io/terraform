@@ -49,7 +49,7 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "REDIS_PASSWORD"                        = var.redis_password
     "REDIS_HOST"                            = var.redis_host
     "REDIS_PORT"                            = var.redis_port
-    "DATABASE_URL"                          = "postgresql://${digitalocean_database_user.fugue-state-user.name}:${digitalocean_database_user.fugue-state-user.password}@${digitalocean_database_cluster.postgres.host}:${digitalocean_database_cluster.postgres.port}/${digitalocean_database_db.fugue-state-db.name}?schema=fugue-state"
+    "DATABASE_URL"                          = "postgresql://${digitalocean_database_user.fugue-state-user.name}:${digitalocean_database_user.fugue-state-user.password}@${digitalocean_database_cluster.postgres.private_host}:${digitalocean_database_cluster.postgres.port}/${digitalocean_database_db.fugue-state-db.name}?sslmode=require"
   }
 }
 resource "kubernetes_secret" "fugue-state-argocd-secret" {
@@ -110,6 +110,17 @@ resource "kubernetes_secret" "s3-access-secret" {
 #     "secretKey" = var.fugue_state_cdn_secret_key
 #   }
 # }
+resource "kubernetes_secret" "ssh_public_key" {
+  depends_on = [kubernetes_namespace.jump]
+  metadata {
+    name      = "ssh-public-keys"
+    namespace = "jump"
+  }
+  data = {
+    "id_rsa.pub" = filebase64("${path.cwd}/.sensitive/id_rsa.pub")
+  }
+}
+
 resource "kubernetes_secret" "argo-workflows-sso-argoworkflows" {
   depends_on = [kubernetes_namespace.argo-workflows]
   metadata {
@@ -232,7 +243,6 @@ resource "kubernetes_secret" "tf-backup" {
     "TF_VAR_github_app_client_secret"     = var.github_app_client_secret,
     "TF_VAR_github_webhook_secret"        = var.github_webhook_secret,
     "TF_VAR_fugue_state_bucket"           = var.fugue_state_bucket,
-    "TF_VAR_replication_password"         = var.replication_password,
     "TF_VAR_app_password"                 = var.app_password,
     "TF_VAR_app_email"                    = var.app_email,
     "TF_VAR_redis_password"               = var.redis_password,

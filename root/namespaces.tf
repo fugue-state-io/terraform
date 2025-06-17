@@ -11,7 +11,16 @@ resource "kubernetes_namespace" "linkerd" {
     name = "linkerd"
   }
 }
-
+resource "kubernetes_namespace" "jump" {
+  depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "jump"
+  }
+}
 resource "kubernetes_namespace" "cert-manager" {
   depends_on = [digitalocean_kubernetes_cluster.fugue-state-cluster]
   metadata {

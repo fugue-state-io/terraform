@@ -40,6 +40,22 @@ resource "digitalocean_database_firewall" "postgres-fw" {
     value = digitalocean_kubernetes_cluster.fugue-state-cluster.id
   }
 }
+resource "digitalocean_database_connection_pool" "fugue-state-pool" {
+  depends_on = [digitalocean_database_db.fugue-state-db, digitalocean_database_user.fugue-state-user]
+  cluster_id = digitalocean_database_cluster.postgres.id
+  db_name    = digitalocean_database_db.fugue-state-db.name
+  name       = "fugue-state-pool"
+  user       = digitalocean_database_user.fugue-state-user.name
+  mode       = "session"
+  size       = 5
+}
+# resource "postgresql_grant" "fugue-state-user-privileges" {
+#   database    = digitalocean_database_db.fugue-state-db.name
+#   role        = digitalocean_database_user.fugue-state-user.name
+#   schema      = "fugue-state"
+#   object_type = "schema"
+#   privileges  = ["ALL"]
+# }
 
 # Database Clusters
 resource "digitalocean_project_resources" "db_resources" {

@@ -192,7 +192,27 @@ variable "smtp_user" {
   type      = string
   sensitive = true
 }
-variable "smtp_server" {
+variable "email_provider" {
+  type      = string
+  sensitive = true
+}
+variable "email_from" {
+  type      = string
+  sensitive = true
+}
+variable "email_from_name" {
+  type      = string
+  sensitive = true
+}
+variable "smtp_host" {
+  type      = string
+  sensitive = true
+}
+variable "smtp_port" {
+  type      = string
+  sensitive = true
+}
+variable "smtp_secure" {
   type      = string
   sensitive = true
 }

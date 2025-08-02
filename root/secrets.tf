@@ -50,6 +50,14 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "REDIS_HOST"                            = var.redis_host
     "REDIS_PORT"                            = var.redis_port
     "DATABASE_URL"                          = "postgresql://${digitalocean_database_user.fugue-state-user.name}:${digitalocean_database_user.fugue-state-user.password}@${digitalocean_database_cluster.postgres.private_host}:${digitalocean_database_cluster.postgres.port}/${digitalocean_database_db.fugue-state-db.name}?sslmode=require"
+    "EMAIL_PROVIDER"                        = var.email_provider
+    "EMAIL_FROM"                            = var.email_from
+    "EMAIL_FROM_NAME"                       = var.email_from_name
+    "SMTP_HOST"                             = var.smtp_host
+    "SMTP_PORT"                             = var.smtp_port
+    "SMTP_SECURE"                           = var.smtp_secure
+    "SMTP_USER"                             = var.smtp_user
+    "SMTP_PASSWORD"                         = var.smtp_password
   }
 }
 resource "kubernetes_secret" "fugue-state-argocd-secret" {

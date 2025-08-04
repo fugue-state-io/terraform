@@ -56,8 +56,8 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "SMTP_HOST"                             = var.smtp_host
     "SMTP_PORT"                             = var.smtp_port
     "SMTP_SECURE"                           = var.smtp_secure
-    "SMTP_USER"                             = var.smtp_user
-    "SMTP_PASSWORD"                         = var.smtp_password
+    "EMAIL_USER"                             = var.smtp_user
+    "EMAIL_PASSWORD"                         = var.smtp_password
   }
 }
 resource "kubernetes_secret" "fugue-state-argocd-secret" {

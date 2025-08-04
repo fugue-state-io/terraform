@@ -86,3 +86,45 @@ resource "digitalocean_project_resources" "networking_resources" {
     digitalocean_domain.fuguestate.urn
   ]
 }
+# SendGrid DNS records for fugue-state.io
+resource "digitalocean_record" "sendgrid_url8690" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "CNAME"
+  name   = "url8690"
+  value  = "sendgrid.net."
+}
+
+resource "digitalocean_record" "sendgrid_54902605" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "CNAME"
+  name   = "54902605"
+  value  = "sendgrid.net."
+}
+
+resource "digitalocean_record" "sendgrid_em5585" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "CNAME"
+  name   = "em5585"
+  value  = "u54902605.wl106.sendgrid.net."
+}
+
+resource "digitalocean_record" "sendgrid_domainkey_s1" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "CNAME"
+  name   = "s1._domainkey"
+  value  = "s1.domainkey.u54902605.wl106.sendgrid.net."
+}
+
+resource "digitalocean_record" "sendgrid_domainkey_s2" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "CNAME"
+  name   = "s2._domainkey"
+  value  = "s2.domainkey.u54902605.wl106.sendgrid.net."
+}
+
+resource "digitalocean_record" "dmarc_policy" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "TXT"
+  name   = "_dmarc"
+  value  = "v=DMARC1; p=none;"
+}

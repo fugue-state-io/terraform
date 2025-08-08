@@ -63,6 +63,17 @@ resource "kubernetes_namespace" "ui" {
   }
 }
 
+resource "kubernetes_namespace" "log-persistence" {
+  depends_on = [helm_release.nginx-ingress]
+  metadata {
+    annotations = {
+      name  = "linkerd.io/inject"
+      value = "enabled"
+    }
+    name = "log-persistence"
+  }
+}
+
 
 resource "kubernetes_namespace" "tf-backup" {
   metadata {

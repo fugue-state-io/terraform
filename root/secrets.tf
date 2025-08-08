@@ -30,6 +30,19 @@ resource "kubernetes_secret" "redis-auth" {
     "redis-password" = var.redis_password
   }
 }
+
+# S3 credentials for log persistence
+resource "kubernetes_secret" "log-persistence-s3-credentials" {
+  depends_on = [kubernetes_namespace.log-persistence]
+  metadata {
+    name      = "log-persistence-s3-credentials"
+    namespace = "log-persistence"
+  }
+  data = {
+    "access-key-id"     = var.do_spaces_access_id 
+    "secret-access-key" = var.do_spaces_secret_key
+  }
+}
 resource "kubernetes_secret" "fugue-state-ui-secrets" {
   depends_on = [kubernetes_namespace.ui]
   metadata {
@@ -44,6 +57,7 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "FUGUE_STATE_BUCKET"                    = var.fugue_state_bucket
     "NEXT_PUBLIC_BASE_URL"                  = var.ui_base_url
     "NEXT_PUBLIC_UI_FEATURE_PROJECT_SELECT" = var.ui_feature_project_select
+    "NEXT_PUBLIC_UI_FEATURE_AUTH"           = var.ui_feature_auth
     "NEXT_TELEMETRY_DISABLED"               = 1
     "NODE_ENV"                              = "production"
     "REDIS_PASSWORD"                        = var.redis_password

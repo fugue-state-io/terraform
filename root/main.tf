@@ -220,6 +220,10 @@ variable "sendgrid_api_key" {
   type      = string
   sensitive = true
 }
+variable "ui_feature_auth" {
+  type      = string
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

@@ -50,3 +50,28 @@ resource "digitalocean_spaces_bucket" "fugue-state-cdn-dev" {
     enabled                                = true
   }
 }
+
+# S3 bucket for log persistence
+resource "digitalocean_spaces_bucket" "fugue-state-logs" {
+  name   = "fugue-state-logs"
+  region = "nyc3"
+
+  # Lifecycle rule to manage log retention
+  lifecycle_rule {
+    id      = "log_retention"
+    enabled = true
+    
+    # Move logs older than 30 days to infrequent access (if supported)
+    expiration {
+      days = 90  # Keep logs for 90 days total
+    }
+    
+    # Clean up incomplete multipart uploads
+    abort_incomplete_multipart_upload_days = 1
+  }
+
+  # Versioning for log files (optional, can help with recovery)
+  versioning {
+    enabled = false  # Disabled for logs to save space
+  }
+}

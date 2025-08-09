@@ -76,7 +76,8 @@ resource "kubernetes_secret" "fugue-state-ui-secrets" {
     "STRIPE_SECRET_KEY"                     = var.stripe_secret_key
     "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"    = var.stripe_publishable_key
     "STRIPE_WEBHOOK_SECRET"                 = var.stripe_webhook_secret
-    "NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY"           = var.stripe_price_id
+    "NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY"  = var.stripe_price_id
+    "ADMIN_PASSWORD"                        = var.admin_password
   }
 }
 resource "kubernetes_secret" "fugue-state-argocd-secret" {

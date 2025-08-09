@@ -140,5 +140,5 @@ resource "digitalocean_record" "bing_site_verification" {
   domain = digitalocean_domain.fugue-state.id
   type   = "CNAME"
   name   = "a3c7e94751bb14de8973b3f023ef780c"
-  value  = "verify.bing.com"
+  value  = "verify.bing.com."
 }

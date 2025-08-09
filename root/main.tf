@@ -224,6 +224,22 @@ variable "ui_feature_auth" {
   type      = string
   sensitive = true
 }
+variable "stripe_secret_key" {
+  type      = string
+  sensitive = true
+}
+variable "stripe_publishable_key" {
+  type      = string
+  sensitive = true
+}
+variable "stripe_webhook_secret" {
+  type      = string
+  sensitive = true
+}
+variable "stripe_price_id" {
+  type      = string
+  sensitive = true
+}
 resource "digitalocean_project" "fugue-state-io" {
   description = "fugue-state-io"
   environment = "Production"

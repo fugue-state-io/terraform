@@ -135,3 +135,10 @@ resource "digitalocean_record" "google_site_verification" {
   name   = "@"
   value  = "google-site-verification=IPVipm8BJEJ3Pigjkw9zO0I3DkVwQ4NMXprk4B6OwO0"
 }
+
+resource "digitalocean_record" "bing_site_verification" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "TXT"
+  name   = "@"
+  value  = "a3c7e94751bb14de8973b3f023ef780c"
+}

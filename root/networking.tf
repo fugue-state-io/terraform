@@ -128,3 +128,10 @@ resource "digitalocean_record" "dmarc_policy" {
   name   = "_dmarc"
   value  = "v=DMARC1; p=none;"
 }
+
+resource "digitalocean_record" "google_site_verification" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "TXT"
+  name   = "@"
+  value  = "google-site-verification=IPVipm8BJEJ3Pigjkw9zO0I3DkVwQ4NMXprk4B6OwO0"
+}

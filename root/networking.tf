@@ -142,3 +142,43 @@ resource "digitalocean_record" "bing_site_verification" {
   name   = "a3c7e94751bb14de8973b3f023ef780c"
   value  = "verify.bing.com."
 }
+
+resource "digitalocean_record" "mx_google_1" {
+  domain   = digitalocean_domain.fugue-state.id
+  type     = "MX"
+  name     = "@"
+  value    = "aspmx.l.google.com."
+  priority = 1
+}
+
+resource "digitalocean_record" "mx_google_5" {
+  domain   = digitalocean_domain.fugue-state.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt1.aspmx.l.google.com."
+  priority = 5
+}
+
+resource "digitalocean_record" "mx_google_5_alt2" {
+  domain   = digitalocean_domain.fugue-state.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt2.aspmx.l.google.com."
+  priority = 5
+}
+
+resource "digitalocean_record" "mx_google_10_alt3" {
+  domain   = digitalocean_domain.fugue-state.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt3.aspmx.l.google.com."
+  priority = 10
+}
+
+resource "digitalocean_record" "mx_google_10_alt4" {
+  domain   = digitalocean_domain.fugue-state.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt4.aspmx.l.google.com."
+  priority = 10
+}

@@ -180,5 +180,18 @@ resource "digitalocean_record" "mx_google_10_alt4" {
   type     = "MX"
   name     = "@"
   value    = "alt4.aspmx.l.google.com."
-  priority = 10
+  priority = 10 
+}
+resource "digitalocean_record" "spf_record" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "TXT"
+  name   = "@"
+  value  = "v=spf1 include:_spf.google.com include:sendgrid.net ~all"
+}
+
+resource "digitalocean_record" "google_domainkey" {
+  domain = digitalocean_domain.fugue-state.id
+  type   = "TXT"
+  name   = "google._domainkey"
+  value  = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjaTbDo0dIgfl2C/r6Z2nvtNVsyz0ivfczn4E4eGpIMfeEw3lOF6VFYXnw7I32KDsw6+MU3GCoyOP4LwLQ6U9NrTJAQpn8JSsDoTig+N5zcz6Gf8n4bXveIifjrPfOpXnqoEK/wMToSXYIDpp0uhS9y04lsi33xzmfUrrSS6duEUPlr0E3K54nJDf8lGjcwPhRSufNVREELAh2pv2TXUyKpe/aMkI6A2APKr+xF/T85OxV9f9xCy0Nkjv2rMd3Uba2IZ+o3XI3m2LeDRGyksDVXpZ3OV+LSUj3y3IFrUMyr/3OOjNr99uPVmONZC2Wc70Mdi+FdY04a090jX5mldPbwIDAQAB"
 }

@@ -207,25 +207,7 @@ resource "kubernetes_secret" "argo-workflows-sso-argocd" {
     "client-id"     = var.argo_workflows_client_id
   }
 }
-resource "kubernetes_secret" "argo-workflows-sso-workflows" {
-  depends_on = [kubernetes_namespace.argo-workflows]
-  metadata {
-    name      = "argo-workflows-sso"
-    namespace = "argo-workflows"
-    labels = {
-      "app.kubernetes.io/part-of"    = "argo-workflows"
-      "app.kubernetes.io/managed-by" = "Helm"
-    }
-    annotations = {
-      "meta.helm.sh/release-namespace" = "argo-workflows"
-      "meta.helm.sh/release-name"      = "argo-workflows"
-    }
-  }
-  data = {
-    "client-secret" = var.argo_workflows_client_secret
-    "client-id"     = var.argo_workflows_client_id
-  }
-}
+
 resource "kubernetes_secret" "argo-workflows-spaces" {
   depends_on = [kubernetes_namespace.argo-workflows]
   metadata {

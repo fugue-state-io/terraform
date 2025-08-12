@@ -364,3 +364,44 @@ resource "digitalocean_record" "google_domainkey_practice_music" {
   name   = "google._domainkey"
   value  = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjaTbDo0dIgfl2C/r6Z2nvtNVsyz0ivfczn4E4eGpIMfeEw3lOF6VFYXnw7I32KDsw6+MU3GCoyOP4LwLQ6U9NrTJAQpn8JSsDoTig+N5zcz6Gf8n4bXveIifjrPfOpXnqoEK/wMToSXYIDpp0uhS9y04lsi33xzmfUrrSS6duEUPlr0E3K54nJDf8lGjcwPhRSufNVREELAh2pv2TXUyKpe/aMkI6A2APKr+xF/T85OxV9f9xCy0Nkjv2rMd3Uba2IZ+o3XI3m2LeDRGyksDVXpZ3OV+LSUj3y3IFrUMyr/3OOjNr99uPVmONZC2Wc70Mdi+FdY04a090jX5mldPbwIDAQAB"
 }
+
+# MX records for practice-music.io (Google Workspace)
+resource "digitalocean_record" "mx_google_1_practice_music" {
+  domain   = digitalocean_domain.practice-music.id
+  type     = "MX"
+  name     = "@"
+  value    = "aspmx.l.google.com."
+  priority = 1
+}
+
+resource "digitalocean_record" "mx_google_5_practice_music" {
+  domain   = digitalocean_domain.practice-music.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt1.aspmx.l.google.com."
+  priority = 5
+}
+
+resource "digitalocean_record" "mx_google_5_alt2_practice_music" {
+  domain   = digitalocean_domain.practice-music.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt2.aspmx.l.google.com."
+  priority = 5
+}
+
+resource "digitalocean_record" "mx_google_10_alt3_practice_music" {
+  domain   = digitalocean_domain.practice-music.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt3.aspmx.l.google.com."
+  priority = 10
+}
+
+resource "digitalocean_record" "mx_google_10_alt4_practice_music" {
+  domain   = digitalocean_domain.practice-music.id
+  type     = "MX"
+  name     = "@"
+  value    = "alt4.aspmx.l.google.com."
+  priority = 10 
+}

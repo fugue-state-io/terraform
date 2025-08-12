@@ -21,6 +21,13 @@ resource "digitalocean_spaces_bucket" "fugue-state-cdn" {
     max_age_seconds = 30000
   }
 
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "POST", "PUT", "DELETE"]
+    allowed_origins = ["https://practice-music.io"]
+    max_age_seconds = 30000
+  }
+
   lifecycle_rule {
     abort_incomplete_multipart_upload_days = 1
     enabled                                = true
